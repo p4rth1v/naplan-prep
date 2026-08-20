@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAPLAN Practice Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F6F5;
+    --surface:#FFFFFF;
+    --surface-alt:#F0F2EF;
+    --border:#DEE3DD;
+    --ink:#1B241E;
+    --ink-soft:#68746C;
+    --ink-faint:#97A199;
+    --brand:#155E52;
+    --brand-dark:#0D453C;
+    --brand-tint:#E1F0EC;
+    --accent:#B3792C;
+    --accent-tint:#F6EAD4;
+    --danger:#AE4433;
+    --danger-tint:#F5E2DC;
+    --success:#3C7A3A;
+    --success-tint:#E4F0E1;
+    --radius-lg:16px;
+    --radius-md:12px;
+    --radius-sm:8px;
+    --shadow-sm:0 1px 2px rgba(20,30,24,0.06);
+    --shadow-md:0 4px 14px rgba(20,30,24,0.07);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Inter', sans-serif;
+    font-weight:700;
+    letter-spacing:-0.015em;
+    margin:0;
+  }
+  #app{max-width:980px;margin:0 auto;padding:0 24px 60px;}
+  button{font-family:inherit;cursor:pointer;}
+  a{color:var(--brand);}
+  .btn{
+    border:1.5px solid var(--border);
+    background:var(--surface);
+    color:var(--ink);
+    padding:10px 18px;
+    border-radius:var(--radius-sm);
+    font-size:14px;
+    font-weight:600;
+    transition:background .12s ease, border-color .12s ease, transform .08s ease;
+  }
+  .btn:hover{border-color:var(--brand);}
+  .btn:active{transform:scale(0.98);}
+  .btn-primary{
+    background:var(--brand);
+    border-color:var(--brand);
+    color:#fff;
+  }
+  .btn-primary:hover{background:var(--brand-dark);border-color:var(--brand-dark);}
+  .btn-ghost{border-color:var(--border);background:transparent;}
+  .btn-small{padding:7px 14px;font-size:13px;}
+  .btn-block{width:100%;}
+  .btn[disabled]{opacity:.45;cursor:not-allowed;}
+  input[type=text],input[type=password]{
+    width:100%;
+    border:1.5px solid var(--border);
+    background:#fff;
+    border-radius:var(--radius-sm);
+    padding:11px 13px;
+    font-size:15px;
+    font-family:inherit;
+    color:var(--ink);
+  }
+  input:focus,textarea:focus,button:focus-visible{
+    outline:2px solid var(--brand);
+    outline-offset:1px;
+  }
+  textarea{
+    width:100%;
+    border:1.5px solid var(--border);
+    background:#fff;
+    border-radius:var(--radius-sm);
+    padding:14px;
+    font-size:15px;
+    font-family:inherit;
+    color:var(--ink);
+    resize:vertical;
+  }
+  label{font-size:12.5px;font-weight:600;color:var(--ink-soft);display:block;margin:0 0 6px;text-transform:uppercase;letter-spacing:.03em;}
+  .field{margin-bottom:16px;}
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-sm);
+    padding:22px 24px;
+  }
+  .error-text{color:var(--danger);font-size:13px;margin-top:6px;font-weight:600;}
+  .muted{color:var(--ink-soft);}
+  .caption{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;}
+  .navbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 0;margin-bottom:8px;
+  }
+  .navbar .brand{display:flex;align-items:center;gap:11px;}
+  .navbar .logo{
+    width:36px;height:36px;border-radius:10px;background:var(--brand);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:15px;flex-shrink:0;
+  }
+  .navbar .brand-text .title{font-size:15px;font-weight:700;}
+  .navbar .brand-text .sub{font-size:12px;color:var(--ink-soft);}
+  .navbar .right{display:flex;align-items:center;gap:10px;}
+  .role-pill{
+    background:var(--brand-tint);color:var(--brand-dark);
+    font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;
+  }
+  .center-screen{
+    min-height:72vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+  }
+  .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:440px;width:100%;margin-top:30px;}
+  @media (max-width:520px){.role-grid{grid-template-columns:1fr;}}
+  .role-card{
+    background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);
+    padding:26px 18px;text-align:center;transition:border-color .15s ease, transform .12s ease, box-shadow .15s ease;
+  }
+  .role-card:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:var(--shadow-md);}
+  .role-card .avatar{
+    width:46px;height:46px;border-radius:50%;background:var(--brand-tint);color:var(--brand-dark);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;margin:0 auto 12px;
+  }
+  .role-card h3{font-size:16px;}
+  .role-card p{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .auth-box{max-width:360px;width:100%;margin:0 auto;}
+  .progress-summary{display:flex;align-items:center;gap:14px;margin:4px 0 24px;}
+  .progress-summary .ptrack{flex:1;height:8px;border-radius:999px;background:var(--surface-alt);overflow:hidden;}
+  .progress-summary .pfill{height:100%;background:var(--brand);border-radius:999px;}
+  .category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:6px;}
+  .cat-card{
+    background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);
+    padding:20px;display:flex;flex-direction:column;gap:8px;position:relative;
+    text-align:left;transition:transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+  }
+  .cat-card:hover{transform:translateY(-2px);border-color:var(--brand);box-shadow:var(--shadow-md);}
+  .cat-card .cat-top{display:flex;align-items:center;gap:10px;}
+  .cat-icon{
+    width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;flex-shrink:0;
+  }
+  .cat-card h3{font-size:16px;}
+  .cat-card .cat-desc{font-size:13px;color:var(--ink-soft);}
+  .cat-card .cat-meta{font-size:12px;color:var(--brand-dark);font-weight:700;margin-top:auto;padding-top:8px;display:flex;align-items:center;gap:6px;}
+  .check-chip{
+    width:20px;height:20px;border-radius:50%;background:var(--success-tint);color:var(--success);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;
+  }
+  .progress-track{height:8px;border-radius:999px;background:var(--surface-alt);overflow:hidden;margin:14px 0 22px;}
+  .progress-fill{height:100%;background:var(--brand);border-radius:999px;transition:width .25s ease;}
+  .quiz-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+  .option-btn{
+    display:block;width:100%;text-align:left;
+    border:1.5px solid var(--border);background:#fff;border-radius:var(--radius-sm);
+    padding:13px 16px;margin-bottom:10px;font-size:15px;color:var(--ink);
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option-btn:hover{border-color:var(--brand);}
+  .option-btn.selected{border-color:var(--brand);background:var(--brand-tint);font-weight:600;}
+  .option-btn.correct{border-color:var(--success);background:var(--success-tint);font-weight:600;}
+  .option-btn.incorrect{border-color:var(--danger);background:var(--danger-tint);font-weight:600;}
+  .passage-box{
+    background:var(--surface-alt);border-left:3px solid var(--accent);
+    border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:16px;font-size:14.5px;
+  }
+  .result-hero{text-align:center;padding:26px 20px;}
+  .score-ring{
+    width:126px;height:126px;border-radius:50%;
+    border:8px solid var(--brand-tint);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    margin:0 auto 16px;
+  }
+  .score-ring .num{font-size:30px;font-weight:800;color:var(--brand-dark);}
+  .score-ring .denom{font-size:12px;color:var(--ink-soft);}
+  .review-item{border-top:1px solid var(--border);padding:14px 0;}
+  .review-item:first-child{border-top:none;}
+  .tag{
+    display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.03em;
+  }
+  .tag-correct{background:var(--success-tint);color:#2C4C27;}
+  .tag-incorrect{background:var(--danger-tint);color:#7A3423;}
+  .tag-time{background:var(--surface-alt);color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+  .tag-time-slow{background:var(--accent-tint);color:#7A521C;font-family:'IBM Plex Mono',monospace;}
+  .tabs{display:flex;gap:4px;margin-bottom:22px;flex-wrap:wrap;border-bottom:1.5px solid var(--border);}
+  .tab-btn{
+    background:transparent;border:none;padding:10px 12px;font-size:14px;font-weight:600;
+    color:var(--ink-soft);border-bottom:2.5px solid transparent;margin-bottom:-1.5px;border-radius:0;
+  }
+  .tab-btn.active{color:var(--brand-dark);border-bottom-color:var(--brand);}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;}
+  .stat-card .stat-label{font-size:12px;color:var(--ink-soft);font-weight:600;}
+  .stat-card .stat-value{font-size:24px;font-weight:800;margin-top:2px;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .bar-label{width:150px;font-size:13px;font-weight:600;flex-shrink:0;}
+  .bar-track{flex:1;height:12px;background:var(--surface-alt);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:999px;background:var(--brand);}
+  .bar-val{width:56px;text-align:right;font-size:12.5px;font-weight:600;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+  .history-row{
+    border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:10px;
+    cursor:pointer;background:var(--surface);
+  }
+  .history-row-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .history-meta{display:flex;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap;}
+  .history-detail{margin-top:12px;border-top:1px solid var(--border);padding-top:12px;display:none;}
+  .history-detail.open{display:block;}
+  .empty-state{text-align:center;padding:50px 20px;color:var(--ink-soft);}
+  .checklist-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:14px;}
+  .checklist-item input{width:18px;height:18px;margin-top:2px;flex-shrink:0;}
+  .writing-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:14px;}
+  .back-link{
+    background:none;border:none;color:var(--brand-dark);font-weight:600;font-size:14px;
+    padding:6px 0;margin-bottom:14px;display:inline-flex;align-items:center;gap:6px;
+  }
+  .word-count{font-size:12px;color:var(--ink-soft);text-align:right;margin-top:4px;}
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;
+    font-size:13px;font-weight:600;opacity:0;transition:opacity .25s ease;pointer-events:none;z-index:50;
+  }
+  .toast.show{opacity:1;}
+  hr.soft{border:none;border-top:1px solid var(--border);margin:20px 0;}
+  .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .cal-nav h3{font-size:15px;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .cal-wd{text-align:center;font-size:10.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;padding-bottom:4px;}
+  .cal-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:9px;font-size:13px;font-weight:700;}
+  .cal-cell.cal-empty{background:transparent;}
+  .cal-cell.cal-future{background:transparent;border:1px dashed var(--border);color:var(--ink-faint);font-weight:500;}
+  .cal-cell.cal-none{background:var(--danger-tint);color:var(--danger);}
+  .cal-cell.cal-some{background:var(--accent-tint);color:#7A521C;}
+  .cal-cell.cal-all{background:var(--success-tint);color:var(--success);}
+  .cal-cell.cal-today{outline:2px solid var(--brand);outline-offset:1px;}
+  .cal-legend{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;}
+  .cal-legend-item{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-soft);}
+  .cal-legend-dot{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+
+window.addEventListener('error', function(e){
+  showFatalError(e && e.message ? e.message : 'Something went wrong loading the app.');
+});
+window.addEventListener('unhandledrejection', function(e){
+  showFatalError(e && e.reason ? String(e.reason) : 'Something went wrong loading the app.');
+});
+function showFatalError(msg){
+  var root = document.getElementById('app');
+  if(!root) return;
+  if(document.getElementById('fatal-banner')) return;
+  var banner = document.createElement('div');
+  banner.id = 'fatal-banner';
+  banner.style.cssText = 'background:#F5E2DC;border:1.5px solid #AE4433;color:#7A3423;padding:14px 18px;border-radius:12px;margin-bottom:16px;font-size:13px;font-weight:600;';
+  banner.textContent = 'Something went wrong: ' + msg + '. Try reloading the page.';
+  root.prepend(banner);
+}
+
+/* ---------------------------------------------------------
+   DATA
+--------------------------------------------------------- */
+
+/* ---------------------------------------------------------
+   READING QUESTION GENERATOR ENGINE
+   Builds original short passages + comprehension questions
+   from randomised scenario templates, instead of a fixed list.
+--------------------------------------------------------- */
+
+var READING_NAME_PRONOUNS = {
+  Mia:"she", Ava:"she", Priya:"she", Zoe:"she", Sofia:"she", Grace:"she", Ruby:"she", Ivy:"she", Ella:"she", Isla:"she",
+  Tom:"he", Chen:"he", Liam:"he", Noah:"he", Jack:"he", Ben:"he", Ethan:"he", Sam:"he", Leo:"he", Mason:"he", Oscar:"he", Kai:"he"
+};
+function pronounFor(name){ return READING_NAME_PRONOUNS[name] || "they"; }
+function possessiveFor(name){ var p = pronounFor(name); return p==="she" ? "her" : p==="he" ? "his" : "their"; }
+
+function buildPassageQuestions(passage, specs){
+  return {
+    passage: passage,
+    questions: specs.map(function(s){
+      var pool = s.distractorPool.filter(function(d){ return d !== s.correct; });
+      var distractors = shuffle(pool.slice()).slice(0,3);
+      var fallback = 1;
+      while(distractors.length < 3){ distractors.push(s.correct + " " + fallback); fallback++; }
+      var opts = shuffle([s.correct].concat(distractors));
+      return { prompt: s.prompt, options: opts, answer: opts.indexOf(s.correct) };
+    })
+  };
+}
+
+function tKiteStory(){
+  var names = pickTwoNames();
+  var name = names[0], helper = names[1];
+  var toy = pickOne(["kite","frisbee","toy boat","model plane","paper aeroplane"]);
+  var obstacle = pickOne(["tall fig tree","garden fence","thick bushes","old shed roof","wooden pier"]);
+  var tool = pickOne(["long stick","broom handle","ladder","piece of rope","fishing net"]);
+  var day = pickOne(["Saturday morning","Sunday afternoon","the first day of the school holidays","a windy afternoon"]);
+  var relation = pickOne(["big brother","big sister","next-door neighbour","best friend","cousin"]);
+  var pro = pronounFor(name);
+  var passage = name+"'s "+toy+" got stuck in the "+obstacle+" on "+day+". "+capitalize(pro)+" tried to shake it loose, but it would not come down. "+helper+", "+name+"'s "+relation+", brought a "+tool+" to help. After a few tries, the "+toy+" came free, and "+name+" gave "+helper+" a big thank-you. They spent the rest of the day playing with the "+toy+" together.";
+  var questions = [
+    { prompt:"Where did "+name+"'s "+toy+" get stuck?", correct: obstacle, distractorPool:["garden shed","letterbox","car roof","swimming pool"] },
+    { prompt:"Who helped "+name+" get the "+toy+" down?", correct: helper, distractorPool: shuffle(MATH_NAMES.filter(function(n){return n!==name && n!==helper;})).slice(0,3) },
+    { prompt:"What did "+helper+" use to help?", correct: tool, distractorPool:["watering can","umbrella","skateboard","paintbrush"] },
+    { prompt:"What did "+name+" and "+helper+" do after the "+toy+" was free?", correct:"played with the "+toy+" together", distractorPool:["went home for dinner","cleaned up the yard","called their teacher"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tExcursion(){
+  var teacher = pickOne(["Mr Patel","Mrs Nguyen","Miss Carter","Mr Ahmed","Ms Rossi","Mr Kelly"]);
+  var destination = pickOne(["wildlife park","local museum","botanic gardens","aquarium","fire station","science centre"]);
+  var animalSets = [["kangaroos","emus","a sleepy koala"],["seals","penguins","a giant turtle"],["parrots","wombats","a dingo"],["monkeys","flamingos","a python"]];
+  var animals = pickOne(animalSets);
+  var transport = pickOne(["bus","train","tram"]);
+  var lunchActivity = pickOne(["sat under a shady tree and shared sandwiches","had a picnic near the entrance","ate lunch in the courtyard"]);
+  var souvenir = pickOne(["a postcard","a sticker","a small toy animal","a bookmark"]);
+  var day = pickOne(["Monday","Tuesday","Wednesday","Thursday","Friday"]);
+  var passage = "On "+day+", "+teacher+"'s class travelled by "+transport+" to the "+destination+". The students saw "+animals[0]+", "+animals[1]+" and "+animals[2]+". "+teacher+" reminded everyone to stay quiet near the animals so they would not get scared. At lunchtime, the class "+lunchActivity+". Before leaving, each student picked "+souvenir+" from the gift shop to remember the day.";
+  var questions = [
+    { prompt:"How did the class travel to the "+destination+"?", correct: transport, distractorPool:["car","boat","aeroplane"] },
+    { prompt:"What was one of the animals the class saw?", correct: animals[2].replace(/^a /,""), distractorPool:["a shark","a lion","a polar bear"] },
+    { prompt:"Why did "+teacher+" ask the class to stay quiet?", correct:"so the animals would not get scared", distractorPool:["because it was nap time","so they could hear the guide better","because the gift shop was closing"] },
+    { prompt:"What did each student get before leaving?", correct: souvenir, distractorPool:["a certificate","free lunch","a balloon"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tPlantStory(){
+  var name = pickOne(MATH_NAMES);
+  var plant = pickOne(["bean seed","sunflower seed","tomato seedling","pumpkin seed","herb cutting"]);
+  var location = pickOne(["a small pot on the windowsill","a garden bed near the back door","a pot on the balcony","a planter box at school"]);
+  var days = randInt(3,7);
+  var totalTime = pickOne(["two weeks","three weeks","a month"]);
+  var feeling = pickOne(["proud","excited","amazed"]);
+  var pro = pronounFor(name);
+  var passage = name+" planted a "+plant+" in "+location+". Every morning before school, "+pro+" gave it a little water. After "+days+" days, a tiny green shoot poked out of the soil. By the end of "+totalTime+", the plant had grown taller than "+possessiveFor(name)+" hand. "+capitalize(name)+" felt "+feeling+" to show the class how much it had grown.";
+  var questions = [
+    { prompt:"Where did "+name+" plant the "+plant+"?", correct: location, distractorPool:["in the school garden","in a glass jar","under a tree"] },
+    { prompt:"When did "+name+" water the plant?", correct:"every morning before school", distractorPool:["only on weekends","after dinner each night","once a week"] },
+    { prompt:"How many days did it take for a shoot to appear?", correct: days+" days", distractorPool: [days+2,days+4,Math.max(1,days-2)].map(function(n){return n+" days";}) },
+    { prompt:"How did "+name+" feel about the plant's growth?", correct: feeling, distractorPool:["worried","bored","confused"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tSportStory(){
+  var name = pickOne(MATH_NAMES);
+  var sport = pickOne(["soccer","netball","basketball","T-ball","swimming","athletics"]);
+  var coach = pickOne(["Coach Lee","Coach Martinez","Coach Wilson","Coach Nguyen"]);
+  var day = pickOne(["Tuesday","Wednesday","Thursday","Saturday"]);
+  var skill = pickOne(["passing","shooting goals","running drills","teamwork exercises"]);
+  var opponent = pickOne(["Lakeside Primary","Riverbank Public School","Green Hills Primary","Oakwood School"]);
+  var outcome = pickOne(["scored the winning point","helped the team come from behind","played their best game yet"]);
+  var celebration = pickOne(["a team pizza night","high fives all around","a group photo","ice creams from the canteen"]);
+  var passage = name+" joined the "+sport+" team at school this term. Every "+day+", the team practises "+skill+" with "+coach+". At "+possessiveFor(name)+" first game against "+opponent+", "+name+" "+outcome+". Afterwards, the whole team celebrated with "+celebration+".";
+  var questions = [
+    { prompt:"What sport did "+name+" join?", correct: sport, distractorPool:["soccer","netball","basketball","T-ball","swimming","athletics"] },
+    { prompt:"Who is the team's coach?", correct: coach, distractorPool:["Coach Lee","Coach Martinez","Coach Wilson","Coach Nguyen"] },
+    { prompt:"Which school did the team play against?", correct: opponent, distractorPool:["Lakeside Primary","Riverbank Public School","Green Hills Primary","Oakwood School"] },
+    { prompt:"How did the team celebrate after the game?", correct: celebration, distractorPool:["an extra training session","a written test","a long bus ride home"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tBakingStory(){
+  var name = pickOne(MATH_NAMES);
+  var relation = pickOne(["mum","dad","grandma","grandpa","aunty","uncle"]);
+  var food = pickOne(["banana muffins","chocolate chip biscuits","a fruit cake","cheese scones","apple pie"]);
+  var occasion = pickOne(["a family birthday","the school fete","a weekend treat","a visit from cousins"]);
+  var waitTime = pickOne(["20 minutes","25 minutes","half an hour","35 minutes"]);
+  var people = pickOne(["the whole family","their neighbours","their classmates","grandma and grandpa"]);
+  var pro = pronounFor(name);
+  var passage = name+" helped "+possessiveFor(name)+" "+relation+" bake "+food+" for "+occasion+". They mixed all the ingredients together and placed the tray in the oven. "+capitalize(pro)+" had to wait "+waitTime+" for it to bake. When it was finally ready, "+name+" shared it with "+people+".";
+  var questions = [
+    { prompt:"What did "+name+" help bake?", correct: food, distractorPool:["banana muffins","chocolate chip biscuits","a fruit cake","cheese scones","apple pie"] },
+    { prompt:"Who did "+name+" bake with?", correct: possessiveFor(name)+" "+relation, distractorPool:["their teacher","a family friend","their older sibling"] },
+    { prompt:"How long did they wait for it to bake?", correct: waitTime, distractorPool:["10 minutes","45 minutes","1 hour"] },
+    { prompt:"Who did "+name+" share it with?", correct: people, distractorPool:["nobody, they ate it all themselves","the school principal","a stranger at the park"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tPetStory(){
+  var name = pickOne(MATH_NAMES);
+  var animal = pickOne(["dog","cat","rabbit","guinea pig","budgie","goldfish"]);
+  var petName = pickOne(["Biscuit","Max","Luna","Rusty","Coco","Peanut","Marbles","Shadow"]);
+  var care = pickOne(["feeds it every morning","takes it for a walk after school","cleans its cage on weekends","brushes its fur each evening"]);
+  var surprise = pickOne(["escaped into the backyard","hid under the bed for an hour","made a funny new noise","chased its tail in circles"]);
+  var feeling = pickOne(["worried, then relieved","confused","amused"]);
+  var resolution = pickOne(["found "+petName+" safe and sound","laughed about it with the family","gave "+petName+" an extra treat"]);
+  var pro = pronounFor(name);
+  var passage = name+" has a pet "+animal+" named "+petName+". "+capitalize(pro)+" "+care+". One afternoon, "+petName+" "+surprise+". "+capitalize(name)+" felt "+feeling+", and in the end "+pro+" "+resolution+".";
+  var questions = [
+    { prompt:"What kind of pet does "+name+" have?", correct: animal, distractorPool:["dog","cat","rabbit","guinea pig","budgie","goldfish"] },
+    { prompt:"What does "+name+" do to look after "+petName+"?", correct: care, distractorPool:["takes it to school","teaches it tricks every day","lets it sleep outside all year"] },
+    { prompt:"What happened one afternoon?", correct: petName+" "+surprise, distractorPool:["the pet got sick","the pet won a prize","the pet learned a new trick"] },
+    { prompt:"How did "+name+" feel about what happened?", correct: feeling, distractorPool:["angry","bored","embarrassed"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tWeatherStory(){
+  var name = pickOne(MATH_NAMES);
+  var event = pickOne(["a sudden thunderstorm","a heatwave","strong winds","heavy rain"]);
+  var activity = pickOne(["a picnic in the park","a bike ride","a game of cricket in the backyard","a walk to the shops"]);
+  var shelterAction = pickOne(["ran inside a nearby cafe","hurried back home","sheltered under a big tree","waited in the school hall"]);
+  var duration = pickOne(["about 20 minutes","nearly an hour","the rest of the afternoon"]);
+  var afterActivity = pickOne(["watched a movie together","played board games","read books on the couch","had hot chocolate"]);
+  var pro = pronounFor(name);
+  var passage = name+" and "+possessiveFor(name)+" family were enjoying "+activity+" when "+event+" began. "+capitalize(pro)+" quickly "+shelterAction+" to stay safe and dry. They waited there for "+duration+" until it was safe to go back outside. Afterwards, the family "+afterActivity+".";
+  var questions = [
+    { prompt:"What were "+name+" and "+possessiveFor(name)+" family doing before the weather changed?", correct: activity, distractorPool:["cleaning the house","visiting the doctor","doing homework"] },
+    { prompt:"What kind of weather happened suddenly?", correct: event, distractorPool:["a sudden thunderstorm","a heatwave","strong winds","heavy rain"] },
+    { prompt:"Where did "+name+" go to stay safe?", correct: shelterAction, distractorPool:["stayed out in the open","went to school","climbed a tree"] },
+    { prompt:"What did the family do afterwards?", correct: afterActivity, distractorPool:["went back outside straight away","went to bed early","cleaned the yard"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tLibraryStory(){
+  var name = pickOne(MATH_NAMES);
+  var genre = pickOne(["adventure","mystery","fantasy","true animal","space"]);
+  var bookTitle = pickOne(["The Secret Cave","Mountain of Mysteries","The Last Dragon Egg","Ocean Explorers","The Missing Map"]);
+  var place = pickOne(["school library","local library","reading corner at home","library bus"]);
+  var timeSpent = pickOne(["two days","a week","one afternoon","the whole weekend"]);
+  var recommend = pickOne(["best friend","younger sibling","whole class","reading buddy"]);
+  var pro = pronounFor(name);
+  var passage = name+" borrowed a "+genre+" book named "+bookTitle+" from the "+place+". "+capitalize(pro)+" was so interested in the story that "+pro+" finished it in "+timeSpent+". "+capitalize(name)+" enjoyed it so much that "+pro+" recommended it to "+possessiveFor(name)+" "+recommend+".";
+  var questions = [
+    { prompt:"What kind of book did "+name+" borrow?", correct: genre, distractorPool:["adventure","mystery","fantasy","true animal","space"] },
+    { prompt:"Where did "+name+" borrow the book from?", correct: place, distractorPool:["a bookshop","a friend's house","the newsagency"] },
+    { prompt:"How long did it take "+name+" to finish the book?", correct: timeSpent, distractorPool:["a month","just one hour","a whole term"] },
+    { prompt:"Who did "+name+" recommend the book to?", correct: possessiveFor(name)+" "+recommend, distractorPool:["their teacher","a stranger","nobody"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+function tFundraiserStory(){
+  var className = pickOne(["Room 6","Room 3","Year 3B","Year 3G","2/3K"]);
+  var day = pickOne(["Friday","Monday","Wednesday"]);
+  var name = pickOne(MATH_NAMES);
+  var food = pickOne(["banana muffins","chocolate crackles","lamingtons","fairy bread","cupcakes"]);
+  var helper = pickOne(["dad","mum","grandma","grandpa"]);
+  var sellTime = pickOne(["ten minutes","fifteen minutes","half the lunch break"]);
+  var goal = pickOne(["three new fruit trees","a new class fish tank","fresh sports equipment","new library books"]);
+  var passage = "Every "+day+", "+className+" runs a small bake sale to raise money for the school garden. "+name+" baked a tray of "+food+" with "+possessiveFor(name)+" "+helper+" the night before. At lunchtime, the "+food+" sold out within "+sellTime+". "+possessiveFor(name)+" teacher counted the coins carefully and wrote the total in a blue notebook. By the end of term, the class had raised enough money to buy "+goal+".";
+  var questions = [
+    { prompt:"What does "+className+" do every "+day+"?", correct:"runs a bake sale", distractorPool:["has a sports day","visits the library","cleans the garden"] },
+    { prompt:"What did "+name+" bake?", correct: food, distractorPool:["chocolate crackles","lamingtons","fairy bread","cupcakes","banana muffins"] },
+    { prompt:"How quickly did the "+food+" sell out?", correct:"within "+sellTime, distractorPool:["by the end of the day","in one hour","they did not sell out"] },
+    { prompt:"What did the class buy with the money they raised?", correct: goal, distractorPool:["a class pet","new sports jerseys","a school excursion"] }
+  ];
+  return buildPassageQuestions(passage, questions);
+}
+
+var READING_TEMPLATES = [tKiteStory, tExcursion, tPlantStory, tSportStory, tBakingStory, tPetStory, tWeatherStory, tLibraryStory, tFundraiserStory];
+
+function nextReadingTemplate(){
+  if(!state.readingTemplatePool || state.readingTemplatePool.length === 0){
+    state.readingTemplatePool = shuffle(READING_TEMPLATES.slice());
+  }
+  return state.readingTemplatePool.pop();
+}
+
+function generateReadingQuestions(count){
+  var result = [];
+  var guard = 0;
+  while(result.length < count && guard < 12){
+    guard++;
+    var template = nextReadingTemplate();
+    var built = template();
+    built.questions.forEach(function(q){
+      result.push({ prompt: q.prompt, options: q.options, answer: q.answer, passage: built.passage });
+    });
+  }
+  return result.slice(0, count);
+}
+
+
+
+/* ---------------------------------------------------------
+   NUMERACY QUESTION GENERATOR ENGINE
+   Generates original Year 3 NAPLAN-style numeracy questions
+   on the fly instead of drawing from a fixed list.
+--------------------------------------------------------- */
+
+var MATH_NAMES = ["Mia","Tom","Chen","Liam","Ava","Noah","Priya","Jack","Zoe","Ben","Sofia","Ethan","Grace","Sam","Ruby","Leo","Ivy","Mason","Ella","Oscar","Isla","Kai"];
+var MATH_ITEMS = ["stickers","marbles","pencils","cards","stamps","shells","buttons","lollies","toy cars","books"];
+var MONEY_ITEMS = ["book","toy car","ball","puzzle","kite","board game","cap","water bottle"];
+var TIME_ACTIVITIES = ["movie","soccer match","music lesson","swimming class","train trip","play date","school assembly"];
+var DATA_SUBJECTS = ["books read","stickers collected","goals scored","pets owned","stars earned"];
+
+function randInt(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
+function pickOne(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+function pickTwoNames(){
+  var a = pickOne(MATH_NAMES), b = pickOne(MATH_NAMES);
+  var tries = 0;
+  while(b === a && tries < 10){ b = pickOne(MATH_NAMES); tries++; }
+  return [a, b];
+}
+function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function centsToMoney(c){ return '$' + (c/100).toFixed(2); }
+function centsToCoinLabel(c){ return c >= 100 ? '$' + (c/100) + ' coins' : c + 'c coins'; }
+
+function numericOptions(correct, spread){
+  var set = new Set([correct]);
+  var tries = 0;
+  while(set.size < 4 && tries < 40){
+    tries++;
+    var delta = randInt(1, Math.max(2, spread)) * (Math.random() < 0.5 ? -1 : 1);
+    var val = correct + delta;
+    if(val >= 0 && !set.has(val)) set.add(val);
+  }
+  var fallback = 1;
+  while(set.size < 4){ if(correct + fallback >= 0 && !set.has(correct + fallback)) set.add(correct + fallback); fallback++; }
+  var arr = shuffle(Array.from(set));
+  return { options: arr.map(String), answer: arr.indexOf(correct) };
+}
+
+function numericOptionsMoney(correctCents, spread){
+  var set = new Set([correctCents]);
+  var tries = 0;
+  while(set.size < 4 && tries < 40){
+    tries++;
+    var delta = randInt(1, Math.max(2, Math.round(spread/5))) * 5 * (Math.random() < 0.5 ? -1 : 1);
+    var val = correctCents + delta;
+    if(val >= 0 && !set.has(val)) set.add(val);
+  }
+  var fallback = 25;
+  while(set.size < 4){ if(correctCents + fallback >= 0 && !set.has(correctCents + fallback)) set.add(correctCents + fallback); fallback += 25; }
+  var arr = shuffle(Array.from(set));
+  return { options: arr.map(centsToMoney), answer: arr.indexOf(correctCents) };
+}
+
+function genWordProblems(tier, templateId){
+  var names = pickTwoNames();
+  var name = names[0], name2 = names[1];
+  var item = pickOne(MATH_ITEMS);
+  if(templateId === 'add'){
+    var a = tier===1?randInt(5,20):tier===2?randInt(20,80):randInt(80,300);
+    var b = tier===1?randInt(2,15):tier===2?randInt(10,60):randInt(30,150);
+    var correct = a+b;
+    var o = numericOptions(correct, Math.max(4, Math.round(correct*0.15)));
+    return { prompt: name+" has "+a+" "+item+". "+name2+" gives "+name+" "+b+" more "+item+". How many "+item+" does "+name+" have now?", options:o.options, answer:o.answer };
+  }
+  if(templateId === 'subtract'){
+    var a2 = tier===1?randInt(10,30):tier===2?randInt(30,120):randInt(120,400);
+    var b2 = tier===1?randInt(2,a2-3):tier===2?randInt(10,a2-10):randInt(20,a2-20);
+    var correct2 = a2-b2;
+    var o2 = numericOptions(correct2, Math.max(4, Math.round(a2*0.12)));
+    return { prompt: name+" had "+a2+" "+item+". "+name+" gave away "+b2+" of them. How many "+item+" does "+name+" have left?", options:o2.options, answer:o2.answer };
+  }
+  if(templateId === 'multiply'){
+    var a3 = tier===1?randInt(2,6):tier===2?randInt(4,10):randInt(6,12);
+    var b3 = tier===1?randInt(2,6):tier===2?randInt(4,9):randInt(5,12);
+    var correct3 = a3*b3;
+    var o3 = numericOptions(correct3, Math.max(4, Math.round(correct3*0.2)));
+    return { prompt: name+" has "+a3+" bags of "+item+" with "+b3+" "+item+" in each bag. How many "+item+" does "+name+" have in total?", options:o3.options, answer:o3.answer };
+  }
+  if(templateId === 'divide'){
+    var b4 = tier===1?randInt(2,5):tier===2?randInt(3,8):randInt(4,10);
+    var per = tier===1?randInt(2,6):tier===2?randInt(4,10):randInt(6,14);
+    var a4 = b4*per;
+    var o4 = numericOptions(per, Math.max(2, Math.round(per*0.3)));
+    return { prompt: name+" shares "+a4+" "+item+" equally between "+b4+" friends. How many "+item+" does each friend get?", options:o4.options, answer:o4.answer };
+  }
+  var packs = randInt(3,8), perPack = randInt(4,10);
+  var given = randInt(2, Math.max(3, packs*perPack-5));
+  var correct5 = packs*perPack - given;
+  var o5 = numericOptions(correct5, Math.max(4, Math.round(Math.abs(correct5)*0.2)));
+  return { prompt: name+" buys "+packs+" packs of "+item+" with "+perPack+" in each pack, then gives "+given+" "+item+" to "+name2+". How many "+item+" does "+name+" have left?", options:o5.options, answer:o5.answer };
+}
+
+function genPlaceValue(tier, templateId){
+  var digits = tier===1?2:tier===2?3:4;
+  if(templateId === 'digitvalue'){
+    var num = randInt(Math.pow(10,digits-1), Math.pow(10,digits)-1);
+    var numStr = String(num);
+    var pos = randInt(0, digits-1);
+    var digit = parseInt(numStr[pos], 10);
+    var placeValue = digit * Math.pow(10, digits-1-pos);
+    var o = numericOptions(placeValue, Math.max(placeValue*0.5, 5));
+    return { prompt: "What is the value of the "+digit+" in "+numStr+"?", options:o.options, answer:o.answer };
+  }
+  if(templateId === 'largest' || templateId === 'smallest'){
+    var nums = [];
+    while(nums.length < 4){
+      var n = randInt(Math.pow(10,digits-1), Math.pow(10,digits)-1);
+      if(nums.indexOf(n) === -1) nums.push(n);
+    }
+    var wantLargest = templateId === 'largest';
+    var target = wantLargest ? Math.max.apply(null,nums) : Math.min.apply(null,nums);
+    var arr = shuffle(nums);
+    return { prompt: "Which number is the "+(wantLargest?"largest":"smallest")+"?", options:arr.map(String), answer:arr.indexOf(target) };
+  }
+  var base = tier===1?10:tier===2?100:1000;
+  var num2 = randInt(base, base*9) + randInt(1, base-1);
+  var rounded = Math.round(num2/base)*base;
+  var o2 = numericOptions(rounded, base);
+  return { prompt: "Round "+num2+" to the nearest "+base+".", options:o2.options, answer:o2.answer };
+}
+
+function genPatterns(tier, templateId){
+  var step = tier===1?randInt(2,5):tier===2?randInt(3,10):randInt(5,20);
+  var descending = templateId === 'descending';
+  var start;
+  if(descending){
+    var minStart = step*4 + step;
+    start = minStart + (tier===1?randInt(0,20):tier===2?randInt(0,40):randInt(0,80));
+  } else {
+    start = tier===1?randInt(1,10):tier===2?randInt(5,40):randInt(10,100);
+  }
+  var seq = [];
+  for(var i=0;i<4;i++){ seq.push(descending ? start-step*i : start+step*i); }
+  var next = descending ? start-step*4 : start+step*4;
+  var o = numericOptions(next, Math.max(2, step));
+  return { prompt: "What is the next number in the pattern? "+seq.join(', ')+", ___", options:o.options, answer:o.answer };
+}
+
+function genMoney(tier, templateId){
+  var name = pickOne(MATH_NAMES);
+  var item = pickOne(MONEY_ITEMS);
+  if(templateId === 'change'){
+    var noteOptions = tier===1?[5,10]:tier===2?[10,20]:[20,50];
+    var note = pickOne(noteOptions);
+    var priceDollars = randInt(1, note-1);
+    var priceCents = tier>=2 ? pickOne([0,50,25,75]) : 0;
+    var priceTotalCents = priceDollars*100 + priceCents;
+    var noteCents = note*100;
+    var changeCents = noteCents - priceTotalCents;
+    var o = numericOptionsMoney(changeCents, 150);
+    return { prompt: name+" has a $"+note+" note and buys a "+item+" for "+centsToMoney(priceTotalCents)+". How much change does "+name+" get?", options:o.options, answer:o.answer };
+  }
+  var coinVals = [200,100,50,20,10];
+  var c1 = pickOne(coinVals), c2 = pickOne(coinVals.filter(function(c){return c!==c1;}));
+  var n1 = randInt(1, tier===1?3:tier===2?5:8);
+  var n2 = randInt(1, tier===1?3:tier===2?5:8);
+  var total = n1*c1 + n2*c2;
+  var o2 = numericOptionsMoney(total, 100);
+  return { prompt: "How much money is "+n1+" × "+centsToCoinLabel(c1)+" plus "+n2+" × "+centsToCoinLabel(c2)+"?", options:o2.options, answer:o2.answer };
+}
+
+function genTime(tier, templateId){
+  var h = randInt(1,12);
+  var mChoices = tier===1?[0,30]:tier===2?[0,15,30,45]:[0,5,10,15,20,25,30,35,40,45,50,55];
+  var m = pickOne(mChoices);
+  var ampm = pickOne(['am','pm']);
+  var durMinutes = tier===1?pickOne([30,60]):tier===2?pickOne([15,45,90]):randInt(10,140);
+  var startTotal = h*60+m;
+  var endTotal = (startTotal + durMinutes) % (12*60);
+  var endH = Math.floor(endTotal/60); if(endH===0) endH=12;
+  var endM = endTotal%60;
+  var endAmpm = (startTotal+durMinutes >= 12*60) ? (ampm==='am'?'pm':'am') : ampm;
+  var correctStr = endH+":"+(endM<10?'0':'')+endM+endAmpm;
+  var name = pickOne(MATH_NAMES);
+  var activity = pickOne(TIME_ACTIVITIES);
+  var durLabel = durMinutes>=60 ? (Math.floor(durMinutes/60)+" hour"+(durMinutes%60?" "+(durMinutes%60)+" minutes":"")) : durMinutes+" minutes";
+  var candidates = new Set([correctStr]);
+  var deltas = [15,-15,30,-30,60,-60];
+  for(var i=0;i<deltas.length && candidates.size<4;i++){
+    var t2 = ((startTotal+durMinutes+deltas[i]) % (12*60) + 12*60) % (12*60);
+    var h2 = Math.floor(t2/60); if(h2===0) h2=12;
+    var m2 = t2%60;
+    candidates.add(h2+":"+(m2<10?'0':'')+m2+endAmpm);
+  }
+  var arr = shuffle(Array.from(candidates)).slice(0,4);
+  if(arr.indexOf(correctStr) === -1){ arr[randInt(0,3)] = correctStr; }
+  return { prompt: name+"'s "+activity+" starts at "+h+":"+(m<10?'0':'')+m+ampm+" and lasts "+durLabel+". What time does it finish?", options:arr, answer:arr.indexOf(correctStr) };
+}
+
+function genMeasurement(tier, templateId){
+  if(templateId === 'perimeter'){
+    var w = tier===1?randInt(2,10):tier===2?randInt(5,20):randInt(10,50);
+    var h = tier===1?randInt(2,10):tier===2?randInt(5,20):randInt(10,50);
+    var correct = 2*(w+h);
+    var o = numericOptions(correct, Math.max(4, Math.round(correct*0.2)));
+    return { prompt: "What is the perimeter of a rectangle that is "+w+"cm by "+h+"cm?", options:o.options.map(function(x){return x+"cm";}), answer:o.answer };
+  }
+  var unitSets = tier===1?[{big:'metres',small:'centimetres',factor:100}]:tier===2?[{big:'kilograms',small:'grams',factor:1000},{big:'litres',small:'millilitres',factor:1000}]:[{big:'metres',small:'centimetres',factor:100},{big:'kilometres',small:'metres',factor:1000}];
+  var u = pickOne(unitSets);
+  var n = tier===1?randInt(1,9):tier===2?randInt(2,15):randInt(2,25);
+  var correct2 = n*u.factor;
+  var o2 = numericOptions(correct2, u.factor);
+  return { prompt: "How many "+u.small+" are in "+n+" "+u.big+"?", options:o2.options, answer:o2.answer };
+}
+
+var MATH_SHAPES = [
+  {name:'triangle', sides:3}, {name:'square', sides:4}, {name:'rectangle', sides:4},
+  {name:'pentagon', sides:5}, {name:'hexagon', sides:6}, {name:'heptagon', sides:7}, {name:'octagon', sides:8}
+];
+function genGeometry(tier, templateId){
+  if(templateId === 'sides'){
+    var shape = pickOne(MATH_SHAPES);
+    var o = numericOptions(shape.sides, 2);
+    return { prompt: "How many sides does a "+shape.name+" have?", options:o.options, answer:o.answer };
+  }
+  if(templateId === 'nosides'){
+    var distractors = shuffle(MATH_SHAPES).slice(0,3).map(function(s){return capitalize(s.name);});
+    var arr = shuffle(distractors.concat(['Circle']));
+    return { prompt: "Which shape has no straight sides?", options:arr, answer:arr.indexOf('Circle') };
+  }
+  var shape2 = pickOne(MATH_SHAPES);
+  var others = shuffle(MATH_SHAPES.filter(function(s){return s.sides!==shape2.sides;})).slice(0,3).map(function(s){return capitalize(s.name);});
+  var arr2 = shuffle(others.concat([capitalize(shape2.name)]));
+  return { prompt: "Which shape has "+shape2.sides+" sides?", options:arr2, answer:arr2.indexOf(capitalize(shape2.name)) };
+}
+
+function genData(tier, templateId){
+  var names4 = shuffle(MATH_NAMES).slice(0,4);
+  var maxVal = tier===1?10:tier===2?20:40;
+  var vals = names4.map(function(){ return randInt(1,maxVal); });
+  var listStr = names4.map(function(n,i){ return n+": "+vals[i]; }).join(', ');
+  var subject = pickOne(DATA_SUBJECTS);
+  if(templateId === 'most'){
+    var maxV = Math.max.apply(null, vals);
+    var winner = names4[vals.indexOf(maxV)];
+    var arr = shuffle(names4);
+    return { prompt: "This table shows "+subject+" by four students: "+listStr+". Who has the most?", options:arr, answer:arr.indexOf(winner) };
+  }
+  if(templateId === 'least'){
+    var minV = Math.min.apply(null, vals);
+    var loser = names4[vals.indexOf(minV)];
+    var arr2 = shuffle(names4);
+    return { prompt: "This table shows "+subject+" by four students: "+listStr+". Who has the fewest?", options:arr2, answer:arr2.indexOf(loser) };
+  }
+  var total = vals.reduce(function(a,b){return a+b;},0);
+  var o = numericOptions(total, Math.max(4, Math.round(total*0.2)));
+  return { prompt: "This table shows "+subject+" by four students: "+listStr+". What is the total?", options:o.options, answer:o.answer };
+}
+
+var NUMERACY_TOPICS = {
+  wordproblems: { label:"Word problems", templates:['add','subtract','multiply','divide','twostep'], gen:genWordProblems },
+  placevalue:   { label:"Number & place value", templates:['digitvalue','largest','smallest','round'], gen:genPlaceValue },
+  patterns:     { label:"Patterns & sequences", templates:['ascending','descending'], gen:genPatterns },
+  money:        { label:"Money", templates:['change','coins'], gen:genMoney },
+  time:         { label:"Time & clocks", templates:['elapsed'], gen:genTime },
+  measurement:  { label:"Measurement", templates:['perimeter','conversion'], gen:genMeasurement },
+  geometry:     { label:"Geometry & shapes", templates:['sides','nosides','whichhas'], gen:genGeometry },
+  data:         { label:"Data & graphs", templates:['most','least','total'], gen:genData }
+};
+var NUMERACY_TOPIC_KEYS = Object.keys(NUMERACY_TOPICS);
+
+function nextNumeracyTopic(){
+  if(!state.numeracyTopicPool || state.numeracyTopicPool.length === 0){
+    state.numeracyTopicPool = shuffle(NUMERACY_TOPIC_KEYS.slice());
+  }
+  return state.numeracyTopicPool.pop();
+}
+function nextNumeracyTemplate(topicKey){
+  if(!state.numeracyTemplatePools[topicKey] || state.numeracyTemplatePools[topicKey].length === 0){
+    state.numeracyTemplatePools[topicKey] = shuffle(NUMERACY_TOPICS[topicKey].templates.slice());
+  }
+  return state.numeracyTemplatePools[topicKey].pop();
+}
+function generateNumeracyQuestion(tier){
+  var q, attempts = 0;
+  do{
+    var topicKey = nextNumeracyTopic();
+    var templateId = nextNumeracyTemplate(topicKey);
+    var raw = NUMERACY_TOPICS[topicKey].gen(tier, templateId);
+    q = { prompt: raw.prompt, options: raw.options, answer: raw.answer, topic: topicKey, templateId: templateId, tier: tier };
+    attempts++;
+  } while(state.numeracySeenPrompts.indexOf(q.prompt) !== -1 && attempts < 8);
+  state.numeracySeenPrompts.push(q.prompt);
+  return q;
+}
+
+var TIER_LABELS = {1:'Easy', 2:'Medium', 3:'Hard'};
+
+function updateNumeracyDifficulty(isCorrect){
+  var p = state.numeracyProgress;
+  p.recentResults = p.recentResults.concat([isCorrect]).slice(-20);
+  if(isCorrect){
+    p.streakCorrect++;
+    p.streakWrong = 0;
+    if(p.streakCorrect >= 3 && p.tier < 3){ p.tier++; p.streakCorrect = 0; }
+  } else {
+    p.streakWrong++;
+    p.streakCorrect = 0;
+    if(p.streakWrong >= 2 && p.tier > 1){ p.tier--; p.streakWrong = 0; }
+  }
+  storageSet('numeracy-progress', p);
+}
+
+function numeracyAccuracyTrend(){
+  var arr = state.numeracyProgress.recentResults;
+  if(!arr || arr.length === 0) return null;
+  var recentSlice = arr.slice(-10);
+  var recentPct = Math.round(recentSlice.filter(Boolean).length / recentSlice.length * 100);
+  var trend = 'steady';
+  if(arr.length >= 6){
+    var half = Math.floor(arr.length/2);
+    var firstPct = arr.slice(0,half).filter(Boolean).length/half;
+    var secondPct = arr.slice(half).filter(Boolean).length/(arr.length-half);
+    if(secondPct - firstPct > 0.12) trend = 'up';
+    else if(firstPct - secondPct > 0.12) trend = 'down';
+  }
+  return { recentPct: recentPct, trend: trend };
+}
+
+var TT_PHRASINGS = [
+  function(t,m){ return t + " × " + m + " = ?"; },
+  function(t,m){ return "What is " + t + " multiplied by " + m + "?"; },
+  function(t,m){ return "What is " + t + " times " + m + "?"; },
+  function(t,m){ return m + " groups of " + t + " equals?"; },
+  function(t,m){ return "What is the total if you have " + m + " groups of " + t + "?"; }
+];
+
+function buildTimesTablesBank(){
+  var bank = [];
+  for(var t = 11; t <= 20; t++){
+    for(var m = 1; m <= 12; m++){
+      var correct = t * m;
+      var distractors = new Set();
+      var deltas = [-t, t, -m, m, -1, 1, -2, 2, -10, 10];
+      for(var d = 0; d < deltas.length && distractors.size < 3; d++){
+        var val = correct + deltas[d];
+        if(val > 0 && val !== correct) distractors.add(val);
+      }
+      var fallback = 3;
+      while(distractors.size < 3){ distractors.add(correct + fallback); fallback += 4; }
+      var opts = Array.from(distractors).slice(0,3);
+      opts.push(correct);
+      opts = shuffle(opts);
+      var phrasing = pickOne(TT_PHRASINGS);
+      bank.push({
+        id: "tt_" + t + "_" + m,
+        prompt: phrasing(t, m),
+        options: opts.map(String),
+        answer: opts.indexOf(correct)
+      });
+    }
+  }
+  return bank;
+}
+
+/* ---------------------------------------------------------
+   LANGUAGE CONVENTIONS QUESTION GENERATOR
+--------------------------------------------------------- */
+
+var LC_MISSPELLINGS = [
+  ["because",["becuase","becaus","beacuse"]], ["friend",["freind","frend","freand"]],
+  ["believe",["beleive","belive","beleave"]], ["different",["diffrent","differant","diferent"]],
+  ["beautiful",["beutiful","beautifull","beatiful"]], ["favourite",["favrite","favorate","favourit"]],
+  ["island",["iland","isaland","ilsand"]], ["January",["Janurary","Januray","Janury"]],
+  ["surprise",["suprise","surprize","surprice"]], ["definitely",["definately","definitly","defenitely"]],
+  ["sentence",["sentance","sentense","centence"]], ["important",["importent","importint","imporant"]],
+  ["remember",["remeber","rember","remembar"]], ["necessary",["neccessary","necesary","neccessery"]],
+  ["though",["thou","tho","thogh"]], ["people",["poeple","peple","peopel"]],
+  ["school",["scool","shcool","schoool"]], ["little",["littel","litle","lilltle"]],
+  ["special",["speical","specail","spesial"]], ["really",["realy","relly","reallly"]],
+  ["their",["thier","theyr","theri"]], ["favourite",["favourate","favurite","favroite"]],
+  ["restaurant",["resturant","restaraunt","restarant"]], ["library",["libary","librery","libraty"]]
+];
+
+var LC_HOMOPHONES = [
+  { correct:"there", options:["their","there","they're","then"], sentence:function(){ return "___ are "+randInt(2,9)+" "+pickOne(["dogs","kids","birds","bikes"])+" in the yard."; } },
+  { correct:"their", options:["their","there","they're","then"], sentence:function(){ return "The "+pickOne(["children","students","players","friends"])+" left ___ bags on the bus."; } },
+  { correct:"they're", options:["their","there","they're","then"], sentence:function(){ return "___ going to "+pickOne(["the beach","the park","school","the pool"])+" this weekend."; } },
+  { correct:"your", options:["your","you're","yore","youre"], sentence:function(){ return "Is this ___ "+pickOne(["new bike","school bag","lunch box","water bottle"])+"?"; } },
+  { correct:"you're", options:["your","you're","yore","youre"], sentence:function(){ return "___ going to love "+pickOne(["this book","the movie","the surprise","this game"])+"."; } },
+  { correct:"its", options:["its","it's","its'","it is"], sentence:function(){ return "The "+pickOne(["dog","cat","bird"])+" wagged ___ tail happily."; } },
+  { correct:"it's", options:["its","it's","its'","it is"], sentence:function(){ return "___ "+pickOne(["raining","sunny","cold","windy"])+" outside today."; } },
+  { correct:"to", options:["to","too","two","tue"], sentence:function(){ return "We are walking ___ "+pickOne(["the shops","school","the park","the library"])+"."; } },
+  { correct:"too", options:["to","too","two","tue"], sentence:function(){ return pickOne(MATH_NAMES)+" wanted to come ___."; } }
+];
+
+var LC_NOUNS = ["dog","cat","teacher","house","garden","bicycle","book","river","mountain","farmer","kite","bridge","forest","kitchen","classroom"];
+var LC_VERBS = ["jumped","ran","laughed","whispered","climbed","danced","shouted","waited","painted","explored","skipped","wandered"];
+var LC_ADJECTIVES = ["tall","tiny","brave","curious","gentle","noisy","ancient","shiny","clever","stormy","cheerful","quiet"];
+
+var LC_PLURALS = [
+  ["child","children"], ["mouse","mice"], ["foot","feet"], ["tooth","teeth"],
+  ["leaf","leaves"], ["knife","knives"], ["box","boxes"], ["baby","babies"],
+  ["man","men"], ["woman","women"], ["goose","geese"], ["cactus","cacti"],
+  ["tomato","tomatoes"], ["potato","potatoes"], ["shelf","shelves"], ["city","cities"]
+];
+
+var LC_CONTRACTIONS = [
+  ["do not","don't"], ["cannot","can't"], ["will not","won't"], ["I am","I'm"],
+  ["they are","they're"], ["is not","isn't"], ["did not","didn't"], ["should not","shouldn't"],
+  ["would not","wouldn't"], ["let us","let's"], ["I have","I've"], ["we will","we'll"],
+  ["he is","he's"], ["she is","she's"], ["was not","wasn't"], ["are not","aren't"]
+];
+
+function genSpellingQuestion(){
+  var pair = pickOne(LC_MISSPELLINGS);
+  var opts = shuffle([pair[0]].concat(pair[1]));
+  return { prompt: "Which word is spelled correctly?", options: opts, answer: opts.indexOf(pair[0]) };
+}
+
+function genHomophoneQuestion(){
+  var h = pickOne(LC_HOMOPHONES);
+  var opts = shuffle(h.options.slice());
+  return { prompt: "Choose the correct word: '" + h.sentence() + "'", options: opts, answer: opts.indexOf(h.correct) };
+}
+
+function genSentencePartQuestion(){
+  var name = pickOne(MATH_NAMES);
+  var adj = pickOne(LC_ADJECTIVES);
+  var noun = pickOne(LC_NOUNS);
+  var verb = pickOne(LC_VERBS);
+  var sentence = "The " + adj + " " + noun + " " + verb + " near " + name + "'s house.";
+  var askAbout = pickOne(['noun','verb','adjective']);
+  var correct = askAbout === 'noun' ? noun : askAbout === 'verb' ? verb : adj;
+  var pool = askAbout === 'noun' ? LC_NOUNS : askAbout === 'verb' ? LC_VERBS : LC_ADJECTIVES;
+  var mc = buildMCFromValue(correct, pool, []);
+  return { prompt: "Which word is a " + askAbout + " in this sentence? '" + sentence + "'", options: mc.options, answer: mc.answer };
+}
+
+function genCapitalizationQuestion(){
+  var petType = pickOne(["dog","cat","rabbit","bird"]);
+  var petName = pickOne(MATH_NAMES);
+  var correct = "My " + petType + " " + petName + " loves the park.";
+  var variants = [
+    "my " + petType + " " + petName + " loves the park.",
+    correct,
+    "My " + petType + " " + petName.toLowerCase() + " loves the Park.",
+    "my " + petType + " " + petName + " Loves the park."
+  ];
+  var opts = shuffle(variants);
+  return { prompt: "Which sentence uses capital letters correctly?", options: opts, answer: opts.indexOf(correct) };
+}
+
+function genEndPunctuationQuestion(){
+  var kind = pickOne(['question','statement','exclamation']);
+  var name = pickOne(MATH_NAMES);
+  var activity = pickOne(["go to the park","play soccer","read a book","visit the zoo","ride bikes"]);
+  var base, correct;
+  if(kind === 'question'){ base = "Can " + name + " " + activity; correct = base + "?"; }
+  else if(kind === 'exclamation'){ base = "Watch out"; correct = base + "!"; }
+  else { base = name + " wants to " + activity; correct = base + "."; }
+  var opts = shuffle([base + ".", base + "?", base + "!", base]);
+  return { prompt: "Which option correctly punctuates: '" + base + "'?", options: opts, answer: opts.indexOf(correct) };
+}
+
+function genPluralQuestion(){
+  var pair = pickOne(LC_PLURALS);
+  var wrongForms = [pair[0] + "s", pair[0] + "es", pair[0].slice(0,-1) + "ies"].filter(function(w){ return w !== pair[1]; });
+  var opts = shuffle([pair[1]].concat(shuffle(wrongForms).slice(0,3)));
+  var fallback = 1;
+  while(opts.length < 4){ opts.push(pair[0] + "-" + fallback); fallback++; }
+  return { prompt: "What is the correct plural of '" + pair[0] + "'?", options: opts, answer: opts.indexOf(pair[1]) };
+}
+
+function genContractionQuestion(){
+  var pair = pickOne(LC_CONTRACTIONS);
+  var wrong = [pair[1].replace("'",""), pair[1] + "'", pair[1].slice(0,-1)].filter(function(w){ return w !== pair[1]; });
+  var opts = shuffle([pair[1]].concat(shuffle(wrong).slice(0,3)));
+  return { prompt: "What is the correct contraction for '" + pair[0] + "'?", options: opts, answer: opts.indexOf(pair[1]) };
+}
+
+var LANGUAGE_GENERATORS = [genSpellingQuestion, genHomophoneQuestion, genSentencePartQuestion, genCapitalizationQuestion, genEndPunctuationQuestion, genPluralQuestion, genContractionQuestion];
+
+function generateLanguageBank(){
+  var pool = shuffle(LANGUAGE_GENERATORS.slice());
+  var out = [], seen = [], guard = 0;
+  while(out.length < 24 && guard < 300){
+    guard++;
+    if(pool.length === 0) pool = shuffle(LANGUAGE_GENERATORS.slice());
+    var genFn = pool.pop();
+    var q = genFn();
+    if(seen.indexOf(q.prompt) !== -1) continue;
+    seen.push(q.prompt);
+    out.push(q);
+  }
+  return out;
+}
+
+/* ---------------------------------------------------------
+   READING QUESTION GENERATOR
+   Original mad-lib style passages with randomised names,
+   places, items and numbers each time, paired with
+   comprehension questions in NAPLAN Year 3 style.
+--------------------------------------------------------- */
+
+var R_PLACES_STUCK = ["the old fig tree","the garden shed","the school fence","a tall bush","the neighbour's yard","the letterbox","the swimming pool cover"];
+var R_TOOLS = ["a long stick","a ladder","a broom handle","a fishing net","a torch"];
+var R_ITEMS_STUCK = ["kite","football","backpack","hat","toy robot","frisbee","balloon"];
+var R_EXCURSION_PLACES = ["the wildlife park","the science museum","the botanic gardens","the aquarium","the fire station","the local farm","the beach"];
+var R_ANIMAL_GROUPS = ["kangaroos and emus","a family of ducks","a sleepy koala","some colourful parrots","a group of turtles","a friendly pony"];
+var R_RULES = ["walk quietly near the animals","stay with their partner","keep their hats on","hold the rope while crossing the road","bring their own water bottle"];
+var R_SOUVENIRS = ["a postcard","a small keyring","a bookmark","a sticker sheet","a pencil"];
+var R_SEEDS = ["bean","sunflower","pumpkin","tomato","carrot"];
+var R_CONTAINERS = ["a small pot on the windowsill","a garden bed","an old ice-cream tub","a planter box on the balcony"];
+var R_FREQUENCIES = ["every morning before school","every afternoon after school","twice a week","every second day"];
+var R_EMOTIONS = ["proud","relieved","excited","surprised"];
+var R_EVENTS = ["the 100 metre race","the long jump","the relay race","the swimming race","the obstacle course"];
+var R_DURATIONS = ["two weeks","a whole month","several weeks","ten days"];
+var R_PLACINGS = ["first","second","third","fourth"];
+var R_FOODS = ["banana muffins","a chocolate cake","biscuits","a fruit salad","cheese scones"];
+var R_OCCASIONS = ["their grandmother's birthday","the school fete","a family picnic","a class party"];
+var R_TOPICS_READ = ["dinosaurs","the ocean","space","famous explorers","volcanoes"];
+var DAYS_OF_WEEK = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
+function buildMCFromValue(correct, pool, exclude){
+  var candidates = pool.filter(function(x){ return exclude.indexOf(x) === -1 && x !== correct; });
+  var distractors = shuffle(candidates).slice(0,3);
+  var fallback = 1;
+  while(distractors.length < 3){ var f = correct + " " + fallback; if(distractors.indexOf(f)===-1) distractors.push(f); fallback++; }
+  var opts = shuffle(distractors.concat([correct]));
+  return { options: opts, answer: opts.indexOf(correct) };
+}
+
+function genReadingLostItem(){
+  var names = pickTwoNames();
+  var name = names[0], name2 = names[1];
+  var item = pickOne(R_ITEMS_STUCK);
+  var place = pickOne(R_PLACES_STUCK);
+  var tool = pickOne(R_TOOLS);
+  var day = pickOne(DAYS_OF_WEEK);
+  var text = name+"'s "+item+" got stuck in "+place+" on "+day+" morning. "+name+" tried to shake it loose, but it would not come down. "+name2+" brought "+tool+" from home and carefully freed the "+item+". "+name+" felt very relieved, and the two friends spent the rest of the afternoon playing together.";
+  var questions = [];
+  var mc1 = buildMCFromValue(place, R_PLACES_STUCK, []);
+  questions.push({ prompt:"Where did "+name+"'s "+item+" get stuck?", options:mc1.options, answer:mc1.answer });
+  var mc2 = buildMCFromValue(name2, MATH_NAMES, [name]);
+  questions.push({ prompt:"Who helped "+name+" get the "+item+" free?", options:mc2.options, answer:mc2.answer });
+  var mc3 = buildMCFromValue(tool, R_TOOLS, []);
+  questions.push({ prompt:"What did "+name2+" use to help "+name+"?", options:mc3.options, answer:mc3.answer });
+  var mc4 = buildMCFromValue(day, DAYS_OF_WEEK, []);
+  questions.push({ prompt:"On which day did "+name+"'s "+item+" get stuck?", options:mc4.options, answer:mc4.answer });
+  return { text:text, questions:questions };
+}
+
+function genReadingExcursion(){
+  var name = pickOne(MATH_NAMES);
+  var place = pickOne(R_EXCURSION_PLACES);
+  var day = pickOne(DAYS_OF_WEEK);
+  var animals = pickOne(R_ANIMAL_GROUPS);
+  var rule = pickOne(R_RULES);
+  var souvenir = pickOne(R_SOUVENIRS);
+  var text = "On "+day+", "+name+"'s class travelled by bus to "+place+". The students saw "+animals+" and learned lots of interesting facts. The teacher reminded everyone to "+rule+". At lunchtime, the class sat together and shared their food. Before leaving, each student chose "+souvenir+" from the gift shop to remember the day.";
+  var questions = [];
+  var mc1 = buildMCFromValue(place, R_EXCURSION_PLACES, []);
+  questions.push({ prompt:"Where did "+name+"'s class go on "+day+"?", options:mc1.options, answer:mc1.answer });
+  var mc2 = buildMCFromValue(day, DAYS_OF_WEEK, []);
+  questions.push({ prompt:"On which day did "+name+"'s class visit "+place+"?", options:mc2.options, answer:mc2.answer });
+  var mc3 = buildMCFromValue(rule, R_RULES, []);
+  questions.push({ prompt:"What did "+name+"'s teacher remind the class to do at "+place+"?", options:mc3.options, answer:mc3.answer });
+  var mc4 = buildMCFromValue(souvenir, R_SOUVENIRS, []);
+  questions.push({ prompt:"What did each student in "+name+"'s class choose before leaving "+place+"?", options:mc4.options, answer:mc4.answer });
+  return { text:text, questions:questions };
+}
+
+function genReadingPlant(){
+  var name = pickOne(MATH_NAMES);
+  var seed = pickOne(R_SEEDS);
+  var container = pickOne(R_CONTAINERS);
+  var freq = pickOne(R_FREQUENCIES);
+  var days1 = randInt(3,7);
+  var emotion = pickOne(R_EMOTIONS);
+  var text = name+" planted a "+seed+" seed in "+container+". "+name+" watered it "+freq+". After "+days1+" days, a tiny green shoot poked out of the soil. Over the following weeks, the plant grew much taller than "+name+" expected. "+name+" felt "+emotion+" to show the class how much it had grown from such a small seed.";
+  var questions = [];
+  var mc1 = buildMCFromValue(container, R_CONTAINERS, []);
+  questions.push({ prompt:"Where did "+name+" plant the "+seed+" seed?", options:mc1.options, answer:mc1.answer });
+  var mc2 = buildMCFromValue(freq, R_FREQUENCIES, []);
+  questions.push({ prompt:"How often did "+name+" water the "+seed+" plant?", options:mc2.options, answer:mc2.answer });
+  var mc3 = buildMCFromValue(String(days1), [3,4,5,6,7,8,9].map(String), []);
+  questions.push({ prompt:"How many days did "+name+"'s "+seed+" seed take to sprout?", options:mc3.options, answer:mc3.answer });
+  var mc4 = buildMCFromValue(emotion, R_EMOTIONS, []);
+  questions.push({ prompt:"How did "+name+" feel about the "+seed+" plant's growth?", options:mc4.options, answer:mc4.answer });
+  return { text:text, questions:questions };
+}
+
+function genReadingSports(){
+  var name = pickOne(MATH_NAMES);
+  var event = pickOne(R_EVENTS);
+  var day = pickOne(DAYS_OF_WEEK);
+  var duration = pickOne(R_DURATIONS);
+  var placing = pickOne(R_PLACINGS);
+  var emotion = pickOne(R_EMOTIONS);
+  var text = name+" trained for "+duration+" before sports day, practising "+event+" every chance "+name+" got. On "+day+", "+name+" finally competed in front of the whole school. "+name+" came "+placing+" and felt "+emotion+" at the end of the race.";
+  var questions = [];
+  var mc1 = buildMCFromValue(event, R_EVENTS, []);
+  questions.push({ prompt:"Which event did "+name+" compete in on "+day+"?", options:mc1.options, answer:mc1.answer });
+  var mc2 = buildMCFromValue(day, DAYS_OF_WEEK, []);
+  questions.push({ prompt:"On which day did "+name+" compete in the "+event+"?", options:mc2.options, answer:mc2.answer });
+  var mc3 = buildMCFromValue(duration, R_DURATIONS, []);
+  questions.push({ prompt:"How long did "+name+" train for before the "+event+"?", options:mc3.options, answer:mc3.answer });
+  var mc4 = buildMCFromValue(placing, R_PLACINGS, []);
+  questions.push({ prompt:"What place did "+name+" come in the "+event+"?", options:mc4.options, answer:mc4.answer });
+  return { text:text, questions:questions };
+}
+
+function genReadingBaking(){
+  var names = pickTwoNames();
+  var name = names[0], name2 = names[1];
+  var food = pickOne(R_FOODS);
+  var occasion = pickOne(R_OCCASIONS);
+  var minutes = pickOne([15,20,25,30,35]);
+  var text = name+" decided to bake "+food+" for "+occasion+". With help from "+name2+", "+name+" mixed the ingredients and placed the tray in the oven for "+minutes+" minutes. The kitchen filled with a wonderful smell, and everyone agreed the "+food+" turned out perfectly.";
+  var questions = [];
+  var mc1 = buildMCFromValue(food, R_FOODS, []);
+  questions.push({ prompt:"What did "+name+" bake for "+occasion+"?", options:mc1.options, answer:mc1.answer });
+  var mc2 = buildMCFromValue(occasion, R_OCCASIONS, []);
+  questions.push({ prompt:"What was "+name+"'s "+food+" for?", options:mc2.options, answer:mc2.answer });
+  var mc3 = buildMCFromValue(name2, MATH_NAMES, [name]);
+  questions.push({ prompt:"Who helped "+name+" bake the "+food+"?", options:mc3.options, answer:mc3.answer });
+  var mc4 = buildMCFromValue(String(minutes), [15,20,25,30,35,40].map(String), []);
+  questions.push({ prompt:"How many minutes did "+name+"'s "+food+" bake for?", options:mc4.options, answer:mc4.answer });
+  return { text:text, questions:questions };
+}
+
+function genReadingLibrary(){
+  var name = pickOne(MATH_NAMES);
+  var numBooks = randInt(2,6);
+  var topic = pickOne(R_TOPICS_READ);
+  var day = pickOne(DAYS_OF_WEEK);
+  var pagesPerDay = pickOne([5,10,15,20]);
+  var text = "On "+day+", "+name+" borrowed "+numBooks+" books about "+topic+" from the library. "+name+" decided to read "+pagesPerDay+" pages every night before bed. It took just over a week to finish all of them, and "+name+" couldn't wait to borrow more.";
+  var questions = [];
+  var mc1 = buildMCFromValue(String(numBooks), [2,3,4,5,6,7].map(String), []);
+  questions.push({ prompt:"How many books about "+topic+" did "+name+" borrow?", options:mc1.options, answer:mc1.answer });
+  var mc2 = buildMCFromValue(topic, R_TOPICS_READ, []);
+  questions.push({ prompt:"What were the books "+name+" borrowed on "+day+" about?", options:mc2.options, answer:mc2.answer });
+  var mc3 = buildMCFromValue(day, DAYS_OF_WEEK, []);
+  questions.push({ prompt:"On which day did "+name+" borrow the "+topic+" books?", options:mc3.options, answer:mc3.answer });
+  var mc4 = buildMCFromValue(String(pagesPerDay), [5,10,15,20,25].map(String), []);
+  questions.push({ prompt:"How many pages of the "+topic+" books did "+name+" read each night?", options:mc4.options, answer:mc4.answer });
+  return { text:text, questions:questions };
+}
+
+var READING_TEMPLATE_FNS = [genReadingLostItem, genReadingExcursion, genReadingPlant, genReadingSports, genReadingBaking, genReadingLibrary];
+
+function generateReadingBank(){
+  var pool = shuffle(READING_TEMPLATE_FNS.slice());
+  var out = [], seenPrompts = [], guard = 0;
+  while(out.length < 20 && guard < 30){
+    guard++;
+    if(pool.length === 0) pool = shuffle(READING_TEMPLATE_FNS.slice());
+    var fn = pool.pop();
+    var passage = fn();
+    passage.questions.forEach(function(q){
+      if(seenPrompts.indexOf(q.prompt) !== -1) return;
+      seenPrompts.push(q.prompt);
+      out.push({ prompt:q.prompt, options:q.options, answer:q.answer, passage:passage.text });
+    });
+  }
+  return out;
+}
+
+/* ---------------------------------------------------------
+   WRITING PROMPT GENERATOR
+--------------------------------------------------------- */
+
+var WP_EVENTS = ["something unexpected happened","the power went out","a new student arrived","it started snowing indoors","a mystery parcel appeared"];
+var WP_PLACES = ["school","the park","a birthday party","the shopping centre","the beach"];
+var WP_CHARACTERS = ["an animal","a toy","a shadow","a statue","an old umbrella"];
+var WP_ABILITIES = ["talk","fly","become invisible","read minds","freeze time"];
+var WP_SOMEWHERE = ["in a big city","on a school excursion","at a busy market","in a forest","at a theme park"];
+var WP_MAGIC_ITEMS = ["an old key","a mysterious map","a strange stone","a glowing lantern","a dusty book"];
+var WP_OCCASIONS_W = ["a school assembly","a family dinner","a sports carnival","a rainy weekend","a camping trip"];
+var WP_AUDIENCES = ["your teacher","your family","your principal","a friend"];
+var WP_PROPOSALS = ["your class should have an extra 15 minutes of play time each day","the school should get a new playground","your family should get a pet","students should be allowed to choose their own homework","your school should have a movie afternoon"];
+var WP_TOPICS_INFO = ["your favourite place","how to look after a pet","how to make your favourite snack","a hobby you enjoy","your favourite season"];
+
+function genNarrativePrompt(){
+  var templates = [
+    function(){ return "Write a story about a day when " + pickOne(WP_EVENTS) + " at " + pickOne(WP_PLACES) + "."; },
+    function(){ return "Write a story about " + pickOne(WP_CHARACTERS) + " that could " + pickOne(WP_ABILITIES) + " for just one day."; },
+    function(){ return "Write a story about getting lost " + pickOne(WP_SOMEWHERE) + "."; },
+    function(){ return "Write a story about finding " + pickOne(WP_MAGIC_ITEMS) + " that seemed to have magic powers."; },
+    function(){ return "Write a story about a surprise that happened during " + pickOne(WP_OCCASIONS_W) + "."; }
+  ];
+  return pickOne(templates)();
+}
+function genPersuasivePrompt(){
+  var templates = [
+    function(){ return "Convince " + pickOne(WP_AUDIENCES) + " that " + pickOne(WP_PROPOSALS) + "."; },
+    function(){ return "Persuade " + pickOne(WP_AUDIENCES) + " to try " + pickOne(["your favourite hobby","a new sport","your favourite food","a fun game"]) + "."; },
+    function(){ return "Write a letter convincing " + pickOne(WP_AUDIENCES) + " that " + pickOne(WP_PROPOSALS) + "."; }
+  ];
+  return pickOne(templates)();
+}
+function genInformativePrompt(){
+  var templates = [
+    function(){ return "Explain how to " + pickOne(["play your favourite game","look after a pet","make your favourite snack","get ready for school"]) + "."; },
+    function(){ return "Describe " + pickOne(WP_TOPICS_INFO) + " and why you like it."; }
+  ];
+  return pickOne(templates)();
+}
+function generateWritingPromptPool(){
+  var pool = [];
+  for(var i=0;i<4;i++){ pool.push({type:'Narrative', prompt:genNarrativePrompt()}); }
+  for(var i=0;i<4;i++){ pool.push({type:'Persuasive', prompt:genPersuasivePrompt()}); }
+  for(var i=0;i<4;i++){ pool.push({type:'Informative', prompt:genInformativePrompt()}); }
+  return pool;
+}
+
+var WRITING_CHECKLIST = [
+  "I gave my writing a title.",
+  "It has a clear beginning, middle and end.",
+  "I used describing words (adjectives).",
+  "I used capital letters and full stops correctly.",
+  "I checked my spelling.",
+  "I broke my writing into paragraphs.",
+  "I stayed on topic the whole way through."
+];
+
+var CATEGORIES = {}; // populated in init() once buildTimesTablesBank can call shuffle
+
+function setupCategories(){
+  CATEGORIES = {
+    reading:{ key:"reading", label:"Reading", icon:"R", color:"#155E52", desc:"Read short passages and answer questions about them.", bank:generateReadingBank, count:15 },
+    language:{ key:"language", label:"Language Conventions", icon:"L", color:"#8E5A1D", desc:"Spelling, grammar and punctuation practice.", bank:generateLanguageBank, count:15 },
+    numeracy:{ key:"numeracy", label:"Numeracy", icon:"N", color:"#2B5E8C", desc:"Number, measurement, shape and pattern questions.", bank:null, dynamic:true, count:15 },
+    timestables:{ key:"timestables", label:"Times Tables 11–20", icon:"T", color:"#6B4A9E", desc:"Multiplication practice for the 11 to 20 times tables.", bank:buildTimesTablesBank, count:15 },
+    writing:{ key:"writing", label:"Writing", icon:"W", color:"#B3792C", desc:"Practise a narrative, persuasive or informative piece.", bank:null, count:null }
+  };
+}
+
+var CATEGORY_ORDER = ['reading','language','numeracy','timestables','writing'];
+
+/* ---------------------------------------------------------
+   STATE
+--------------------------------------------------------- */
+
+var state = {
+  screen: "loading",
+  authConfig: null,
+  role: null,
+  loginError: "",
+  quizResults: [],
+  writingSamples: [],
+  activeQuiz: null,
+  quizAnswers: [],
+  quizTimes: [],
+  questionStartAt: null,
+  quizIndex: 0,
+  selectedOption: null,
+  activeWritingPrompt: null,
+  writingChoices: [],
+  writingChecklist: {},
+  writingStartAt: null,
+  writingPhase: "inprogress",
+  writingDurationSeconds: null,
+  adminTab: "overview",
+  openHistoryId: null,
+  calendarYear: (new Date()).getFullYear(),
+  calendarMonth: (new Date()).getMonth(),
+  numeracyProgress: { tier: 1, recentResults: [], streakCorrect: 0, streakWrong: 0 },
+  numeracyTopicPool: [],
+  numeracyTemplatePools: {},
+  numeracySeenPrompts: []
+};
+
+var SLOW_SECONDS = 25;
+
+/* ---------------------------------------------------------
+   STORAGE HELPERS
+--------------------------------------------------------- */
+
+var memoryStore = {};
+var activePaperTimer = null;
+
+function lsGet(key){
+  try{
+    var raw = window.localStorage.getItem('naplan-journal:'+key);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e){ return null; }
+}
+function lsSet(key, value){
+  try{
+    window.localStorage.setItem('naplan-journal:'+key, JSON.stringify(value));
+    return true;
+  } catch(e){ return false; }
+}
+function hasCloudStorage(){
+  return !!(window.storage && typeof window.storage.get === 'function' && typeof window.storage.set === 'function');
+}
+function storageGet(key){
+  return new Promise(function(resolve){
+    if(hasCloudStorage()){
+      try{
+        window.storage.get(key, false).then(function(res){
+          resolve(res && res.value ? JSON.parse(res.value) : null);
+        }).catch(function(){
+          resolve(lsGet(key) || memoryStore[key] || null);
+        });
+      } catch(e){
+        resolve(lsGet(key) || memoryStore[key] || null);
+      }
+    } else {
+      resolve(lsGet(key) || memoryStore[key] || null);
+    }
+  });
+}
+function storageSet(key, value){
+  memoryStore[key] = value;
+  lsSet(key, value);
+  return new Promise(function(resolve){
+    if(hasCloudStorage()){
+      try{
+        window.storage.set(key, JSON.stringify(value), false).then(function(){ resolve(true); }).catch(function(){ resolve(false); });
+      } catch(e){ resolve(false); }
+    } else {
+      resolve(true);
+    }
+  });
+}
+
+function showToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+
+function fmtDate(iso){
+  var d = new Date(iso);
+  return d.toLocaleDateString('en-AU', {day:'numeric', month:'short', year:'numeric'}) + ' · ' + d.toLocaleTimeString('en-AU', {hour:'2-digit', minute:'2-digit'});
+}
+
+function fmtDuration(seconds){
+  if(seconds === null || seconds === undefined) return '—';
+  var s = Math.round(seconds);
+  if(s < 60) return s + 's';
+  var m = Math.floor(s/60), r = s % 60;
+  return m + 'm ' + (r<10?'0':'') + r + 's';
+}
+
+function fmtMinutes(seconds){
+  if(seconds === null || seconds === undefined) return '—';
+  var mins = seconds / 60;
+  if(mins < 0.1) return '<0.1 min';
+  return mins.toFixed(1) + ' min';
+}
+
+function fmtClock(seconds){
+  var s = Math.max(0, Math.floor(seconds));
+  var m = Math.floor(s/60), r = s%60;
+  return m + ':' + (r<10?'0':'') + r;
+}
+
+function saveWritingNote(id, noteText){
+  var updated = state.writingSamples.map(function(s){
+    if(s.id !== id) return s;
+    var copy = {};
+    for(var k in s){ copy[k] = s[k]; }
+    copy.adminNote = noteText;
+    return copy;
+  });
+  state.writingSamples = updated;
+  storageSet('writing-samples', updated).then(function(){
+    showToast('Note saved.');
+  });
+}
+
+/* ---------------------------------------------------------
+   DAILY COMPLETION / CALENDAR HELPERS
+--------------------------------------------------------- */
+
+function pad2(n){ return n < 10 ? '0'+n : ''+n; }
+function localDateKey(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function todayKey(){ return localDateKey(new Date()); }
+function isoToLocalKey(iso){ return localDateKey(new Date(iso)); }
+
+function getCompletedCategoriesForDate(dateKey){
+  var set = {};
+  state.quizResults.forEach(function(r){ if(isoToLocalKey(r.date) === dateKey) set[r.category] = true; });
+  state.writingSamples.forEach(function(s){ if(isoToLocalKey(s.date) === dateKey) set.writing = true; });
+  return set;
+}
+function completedCountForDate(dateKey){
+  return Object.keys(getCompletedCategoriesForDate(dateKey)).length;
+}
+function isCategoryDoneToday(catKey){
+  return !!getCompletedCategoriesForDate(todayKey())[catKey];
+}
+
+function changeCalendarMonth(delta){
+  var d = new Date(state.calendarYear, state.calendarMonth + delta, 1);
+  state.calendarYear = d.getFullYear();
+  state.calendarMonth = d.getMonth();
+  render();
+}
+
+function buildCalendarCard(){
+  var card = el('<div class="card"></div>');
+  var nav = el('<div class="cal-nav"></div>');
+  var prevBtn = el('<button class="btn btn-ghost btn-small">&larr;</button>');
+  prevBtn.addEventListener('click', function(){ changeCalendarMonth(-1); });
+  var monthDate = new Date(state.calendarYear, state.calendarMonth, 1);
+  var label = monthDate.toLocaleDateString('en-AU', {month:'long', year:'numeric'});
+  var nextBtn = el('<button class="btn btn-ghost btn-small">&rarr;</button>');
+  nextBtn.addEventListener('click', function(){ changeCalendarMonth(1); });
+  nav.appendChild(prevBtn);
+  nav.appendChild(el('<h3>'+label+'</h3>'));
+  nav.appendChild(nextBtn);
+  card.appendChild(nav);
+
+  var grid = el('<div class="cal-grid"></div>');
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(w){
+    grid.appendChild(el('<div class="cal-wd">'+w+'</div>'));
+  });
+
+  var firstDay = new Date(state.calendarYear, state.calendarMonth, 1);
+  var startOffset = (firstDay.getDay() + 6) % 7;
+  var daysInMonth = new Date(state.calendarYear, state.calendarMonth + 1, 0).getDate();
+  var todayK = todayKey();
+  var todayDate = new Date(); todayDate.setHours(23,59,59,999);
+
+  for(var i=0; i<startOffset; i++){ grid.appendChild(el('<div class="cal-cell cal-empty"></div>')); }
+  for(var day=1; day<=daysInMonth; day++){
+    var dateObj = new Date(state.calendarYear, state.calendarMonth, day);
+    var key = localDateKey(dateObj);
+    var cell = document.createElement('div');
+    if(dateObj > todayDate){
+      cell.className = 'cal-cell cal-future';
+    } else {
+      var count = completedCountForDate(key);
+      var tier = count === 0 ? 'cal-none' : (count >= 5 ? 'cal-all' : 'cal-some');
+      cell.className = 'cal-cell ' + tier;
+      cell.title = count + ' of 5 areas completed';
+    }
+    if(key === todayK) cell.classList.add('cal-today');
+    cell.textContent = day;
+    grid.appendChild(cell);
+  }
+  card.appendChild(grid);
+
+  var legend = el('<div class="cal-legend"></div>');
+  function legendItem(color, label){
+    var item = el('<div class="cal-legend-item"></div>');
+    var dot = el('<span class="cal-legend-dot"></span>');
+    dot.style.background = color;
+    item.appendChild(dot);
+    item.appendChild(document.createTextNode(label));
+    return item;
+  }
+  legend.appendChild(legendItem('var(--success)', 'All 5 areas complete'));
+  legend.appendChild(legendItem('var(--accent)', 'Some areas complete'));
+  legend.appendChild(legendItem('var(--danger)', 'No areas complete'));
+  card.appendChild(legend);
+
+  return card;
+}
+
+/* ---------------------------------------------------------
+   INIT
+--------------------------------------------------------- */
+
+function init(){
+  setupCategories();
+  render();
+  Promise.all([
+    storageGet('auth-config'),
+    storageGet('quiz-results'),
+    storageGet('writing-samples'),
+    storageGet('numeracy-progress')
+  ]).then(function(res){
+    state.authConfig = res[0];
+    state.quizResults = res[1] || [];
+    state.writingSamples = res[2] || [];
+    state.numeracyProgress = res[3] || { tier: 1, recentResults: [], streakCorrect: 0, streakWrong: 0 };
+    state.screen = "role-select";
+    render();
+  }).catch(function(){
+    state.screen = "role-select";
+    render();
+    showFatalError('Could not load saved progress, starting fresh.');
+  });
+}
+
+/* ---------------------------------------------------------
+   AUTH ACTIONS
+--------------------------------------------------------- */
+
+function chooseRole(role){
+  state.role = role;
+  state.loginError = "";
+  if(role === 'soham'){
+    state.screen = (state.authConfig && state.authConfig.sohamPassword) ? "soham-login" : "soham-setup";
+  } else {
+    state.screen = (state.authConfig && state.authConfig.adminPassword) ? "admin-login" : "admin-setup";
+  }
+  render();
+}
+
+function submitSetup(role, pass){
+  if(!pass || pass.length < 3){
+    state.loginError = "Choose a password with at least 3 characters.";
+    render();
+    return;
+  }
+  var cfg = state.authConfig || {};
+  if(role === 'soham'){
+    cfg.sohamPassword = pass;
+    if(!cfg.sohamCreatedDate) cfg.sohamCreatedDate = todayKey();
+  } else {
+    cfg.adminPassword = pass;
+  }
+  storageSet('auth-config', cfg).then(function(){
+    state.authConfig = cfg;
+    state.loginError = "";
+    state.screen = role === 'soham' ? "child-home" : "admin-dashboard";
+    render();
+  });
+}
+
+function submitLogin(role, pass){
+  var expected = role === 'soham' ? state.authConfig.sohamPassword : state.authConfig.adminPassword;
+  if(pass === expected){
+    state.loginError = "";
+    state.screen = role === 'soham' ? "child-home" : "admin-dashboard";
+  } else {
+    state.loginError = "That password isn't right. Try again.";
+  }
+  render();
+}
+
+function logout(){
+  state.role = null;
+  state.screen = "role-select";
+  state.activeQuiz = null;
+  render();
+}
+
+/* ---------------------------------------------------------
+   QUIZ FLOW
+--------------------------------------------------------- */
+
+function shuffleQuestionOptions(q){
+  var correctValue = q.options[q.answer];
+  var newOptions = shuffle(q.options.slice());
+  var newAnswer = newOptions.indexOf(correctValue);
+  var copy = {};
+  for(var k in q){ copy[k] = q[k]; }
+  copy.options = newOptions;
+  copy.answer = newAnswer;
+  return copy;
+}
+
+function startQuiz(catKey){
+  if(isCategoryDoneToday(catKey)){
+    showToast("Already completed today's " + CATEGORIES[catKey].label + ". Come back tomorrow!");
+    return;
+  }
+  var cat = CATEGORIES[catKey];
+  var picked;
+  if(cat.dynamic){
+    state.numeracyTopicPool = [];
+    state.numeracyTemplatePools = {};
+    state.numeracySeenPrompts = [];
+    picked = [ generateNumeracyQuestion(state.numeracyProgress.tier) ];
+  } else {
+    var resolvedBank = (typeof cat.bank === 'function') ? cat.bank() : cat.bank;
+    picked = shuffle(resolvedBank).slice(0, cat.count).map(shuffleQuestionOptions);
+  }
+  state.activeQuiz = { catKey: catKey, questions: picked, dynamic: !!cat.dynamic, total: cat.count };
+  state.quizAnswers = new Array(cat.count).fill(null);
+  state.quizTimes = new Array(cat.count).fill(null);
+  state.quizIndex = 0;
+  state.selectedOption = null;
+  state.questionStartAt = Date.now();
+  state.screen = "quiz";
+  render();
+}
+
+function selectOption(idx){
+  state.selectedOption = idx;
+  render();
+}
+
+function advanceQuiz(){
+  if(state.selectedOption === null) return;
+  var quiz = state.activeQuiz;
+  var currentQ = quiz.questions[state.quizIndex];
+  var isCorrect = state.selectedOption === currentQ.answer;
+  var elapsed = (Date.now() - state.questionStartAt) / 1000;
+  state.quizAnswers[state.quizIndex] = state.selectedOption;
+  state.quizTimes[state.quizIndex] = elapsed;
+
+  if(quiz.catKey === 'numeracy'){
+    updateNumeracyDifficulty(isCorrect);
+  }
+
+  if(state.quizIndex < quiz.total - 1){
+    state.quizIndex++;
+    state.selectedOption = null;
+    state.questionStartAt = Date.now();
+    if(quiz.dynamic){
+      quiz.questions.push(generateNumeracyQuestion(state.numeracyProgress.tier));
+    }
+    render();
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz(){
+  var quiz = state.activeQuiz;
+  var q = quiz.questions;
+  var details = q.map(function(item, i){
+    var chosen = state.quizAnswers[i];
+    return {
+      prompt: item.prompt,
+      passage: item.passage || null,
+      options: item.options,
+      chosenIndex: chosen,
+      correctIndex: item.answer,
+      isCorrect: chosen === item.answer,
+      timeSeconds: state.quizTimes[i],
+      topic: item.topic || null,
+      tier: item.tier || null
+    };
+  });
+  var score = details.filter(function(d){ return d.isCorrect; }).length;
+  var totalTime = details.reduce(function(s,d){ return s + (d.timeSeconds||0); }, 0);
+  var result = {
+    id: 'r_' + Date.now(),
+    date: new Date().toISOString(),
+    category: quiz.catKey,
+    score: score,
+    total: q.length,
+    totalTimeSeconds: totalTime,
+    avgTimeSeconds: totalTime / q.length,
+    details: details
+  };
+  if(quiz.catKey === 'numeracy'){
+    result.difficultyTier = state.numeracyProgress.tier;
+  }
+  var updated = state.quizResults.concat([result]);
+  state.quizResults = updated;
+  storageSet('quiz-results', updated);
+  state.lastResult = result;
+  state.screen = "quiz-result";
+  render();
+}
+
+function exitQuiz(){
+  state.activeQuiz = null;
+  state.screen = "child-home";
+  render();
+}
+
+/* ---------------------------------------------------------
+   WRITING FLOW
+--------------------------------------------------------- */
+
+function pickWritingPrompts(){
+  var pool = generateWritingPromptPool();
+  var types = ['Narrative','Persuasive','Informative'];
+  return shuffle(types).map(function(t){
+    var group = pool.filter(function(p){ return p.type === t; });
+    return shuffle(group)[0];
+  });
+}
+
+function openWritingSelect(){
+  if(isCategoryDoneToday('writing')){
+    showToast("Already completed today's Writing. Come back tomorrow!");
+    return;
+  }
+  state.writingChoices = pickWritingPrompts();
+  state.screen = 'writing-select';
+  render();
+}
+
+function startWriting(promptObj){
+  state.activeWritingPrompt = promptObj;
+  state.writingChecklist = {};
+  state.writingStartAt = Date.now();
+  state.writingPhase = "inprogress";
+  state.writingDurationSeconds = null;
+  state.screen = "writing";
+  render();
+}
+
+function finishPaperWriting(){
+  state.writingDurationSeconds = (Date.now() - state.writingStartAt) / 1000;
+  state.writingPhase = "review";
+  render();
+}
+
+function saveWriting(){
+  var checkedCount = Object.keys(state.writingChecklist).filter(function(k){ return state.writingChecklist[k]; }).length;
+  var sample = {
+    id: 'w_' + Date.now(),
+    date: new Date().toISOString(),
+    promptType: state.activeWritingPrompt.type,
+    prompt: state.activeWritingPrompt.prompt,
+    mode: 'paper',
+    durationSeconds: state.writingDurationSeconds,
+    checklist: WRITING_CHECKLIST.map(function(item){ return { item: item, checked: !!state.writingChecklist[item] }; }),
+    checklistScore: checkedCount + '/' + WRITING_CHECKLIST.length,
+    adminNote: ''
+  };
+  var updated = state.writingSamples.concat([sample]);
+  state.writingSamples = updated;
+  storageSet('writing-samples', updated).then(function(){
+    showToast("Nice work! Marked complete for your parent to review.");
+    state.screen = "child-home";
+    render();
+  });
+}
+
+/* ---------------------------------------------------------
+   RENDER HELPERS
+--------------------------------------------------------- */
+
+function el(html){
+  var d = document.createElement('div');
+  d.innerHTML = html;
+  return d.firstElementChild;
+}
+
+function categoryBestPct(catKey){
+  var results = state.quizResults.filter(function(r){ return r.category === catKey; });
+  if(results.length === 0) return null;
+  var best = 0;
+  results.forEach(function(r){ var pct = r.score / r.total; if(pct > best) best = pct; });
+  return Math.round(best * 100);
+}
+function categoryAvgPct(catKey){
+  var results = state.quizResults.filter(function(r){ return r.category === catKey; });
+  if(results.length === 0) return null;
+  var sum = 0;
+  results.forEach(function(r){ sum += r.score / r.total; });
+  return Math.round((sum / results.length) * 100);
+}
+function categoryAvgTime(catKey){
+  var times = [];
+  state.quizResults.filter(function(r){ return r.category === catKey; }).forEach(function(r){
+    r.details.forEach(function(d){ if(d.timeSeconds !== null && d.timeSeconds !== undefined) times.push(d.timeSeconds); });
+  });
+  if(times.length === 0) return null;
+  return times.reduce(function(a,b){ return a+b; }, 0) / times.length;
+}
+function overallProgress(){
+  var done = 0;
+  ['reading','language','numeracy','timestables'].forEach(function(k){ if(categoryBestPct(k) !== null) done++; });
+  if(state.writingSamples.length > 0) done++;
+  return { done: done, total: 5 };
+}
+
+function navbar(roleLabel, showLogout){
+  var nav = el('<div class="navbar"></div>');
+  var brand = el('<div class="brand"><div class="logo">N</div><div class="brand-text"><div class="title">NAPLAN Practice Hub</div><div class="sub">Year 3 preparation</div></div></div>');
+  nav.appendChild(brand);
+  var right = el('<div class="right"></div>');
+  if(roleLabel) right.appendChild(el('<span class="role-pill">'+roleLabel+'</span>'));
+  if(showLogout){
+    var logoutBtn = el('<button class="btn btn-ghost btn-small">Log out</button>');
+    logoutBtn.addEventListener('click', logout);
+    right.appendChild(logoutBtn);
+  }
+  nav.appendChild(right);
+  return nav;
+}
+
+/* ---------------------------------------------------------
+   SCREENS
+--------------------------------------------------------- */
+
+function screenLoading(){
+  return el('<div class="center-screen"><p class="muted">Loading…</p></div>');
+}
+
+function screenRoleSelect(){
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar(null, false));
+  var center = el('<div class="center-screen" style="min-height:60vh;"></div>');
+  center.appendChild(el('<div class="caption">Sign in</div>'));
+  center.appendChild(el('<h1 style="font-size:26px;margin-top:8px;">Who is using the app?</h1>'));
+
+  var grid = el('<div class="role-grid"></div>');
+  var sohamCard = el('<button class="role-card" style="cursor:pointer;"><div class="avatar">S</div><h3>Soham</h3><p>Start practising</p></button>');
+  sohamCard.addEventListener('click', function(){ chooseRole('soham'); });
+  var adminCard = el('<button class="role-card" style="cursor:pointer;"><div class="avatar">A</div><h3>Admin</h3><p>View progress</p></button>');
+  adminCard.addEventListener('click', function(){ chooseRole('admin'); });
+  grid.appendChild(sohamCard);
+  grid.appendChild(adminCard);
+  center.appendChild(grid);
+  wrap.appendChild(center);
+  return wrap;
+}
+
+function screenAuth(mode, role){
+  var isSetup = mode === 'setup';
+  var roleLabel = role === 'soham' ? 'Soham' : 'Admin';
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar(null, false));
+  var center = el('<div class="center-screen" style="min-height:60vh;"></div>');
+  var box = el('<div class="card auth-box"></div>');
+  box.appendChild(el('<div class="caption">'+(isSetup ? 'First time setup' : 'Welcome back')+'</div>'));
+  box.appendChild(el('<h2 style="font-size:20px;margin:6px 0 18px;">'+roleLabel+'</h2>'));
+
+  var field = el('<div class="field"></div>');
+  field.appendChild(el('<label>'+(isSetup ? 'Create a password' : 'Password')+'</label>'));
+  var input = document.createElement('input');
+  input.type = 'password';
+  input.placeholder = isSetup ? 'At least 3 characters' : 'Enter password';
+  field.appendChild(input);
+  box.appendChild(field);
+
+  if(state.loginError){ box.appendChild(el('<p class="error-text">'+state.loginError+'</p>')); }
+
+  var goBtn = el('<button class="btn btn-primary btn-block" style="margin-top:6px;">'+(isSetup ? 'Save password and start' : 'Log in')+'</button>');
+  goBtn.addEventListener('click', function(){
+    if(isSetup) submitSetup(role, input.value);
+    else submitLogin(role, input.value);
+  });
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter') goBtn.click(); });
+  box.appendChild(goBtn);
+
+  var back = el('<button class="back-link" style="margin-top:14px;">&larr; Back</button>');
+  back.addEventListener('click', function(){ state.loginError=""; state.screen = 'role-select'; render(); });
+  box.appendChild(back);
+
+  center.appendChild(box);
+  wrap.appendChild(center);
+  setTimeout(function(){ input.focus(); }, 30);
+  return wrap;
+}
+
+function screenChildHome(){
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar('Soham', true));
+
+  var doneToday = getCompletedCategoriesForDate(todayKey());
+  var doneTodayCount = Object.keys(doneToday).length;
+  var summary = el('<div class="progress-summary"></div>');
+  summary.appendChild(el('<span class="caption" style="white-space:nowrap;">Today: '+doneTodayCount+' of 5 areas complete</span>'));
+  var track = el('<div class="ptrack"></div>');
+  var fill = el('<div class="pfill"></div>');
+  fill.style.width = Math.round((doneTodayCount/5)*100) + '%';
+  track.appendChild(fill);
+  summary.appendChild(track);
+  wrap.appendChild(summary);
+
+  wrap.appendChild(el('<p class="muted" style="margin:-8px 0 18px;">Complete each area once a day. Areas reset every morning.</p>'));
+
+  var grid = el('<div class="category-grid"></div>');
+  CATEGORY_ORDER.forEach(function(k){
+    var cat = CATEGORIES[k];
+    var locked = !!doneToday[k];
+    var card = el('<button class="cat-card" style="cursor:pointer;"></button>');
+    var top = el('<div class="cat-top"></div>');
+    var icon = el('<div class="cat-icon">'+cat.icon+'</div>');
+    icon.style.background = cat.color + '1A';
+    icon.style.color = cat.color;
+    top.appendChild(icon);
+    top.appendChild(el('<h3>'+cat.label+'</h3>'));
+    card.appendChild(top);
+    card.appendChild(el('<p class="cat-desc">'+cat.desc+'</p>'));
+
+    var meta = el('<div class="cat-meta"></div>');
+    if(locked){
+      meta.appendChild(el('<span>Completed today — new set tomorrow</span>'));
+      meta.appendChild(el('<span class="check-chip">&#10003;</span>'));
+    } else if(k === 'writing'){
+      var n = state.writingSamples.length;
+      meta.appendChild(el('<span>'+(n === 0 ? 'Not started yet' : n + ' piece' + (n===1?'':'s') + ' written so far')+'</span>'));
+    } else {
+      var best = categoryBestPct(k);
+      meta.appendChild(el('<span>'+(best === null ? 'Not attempted yet' : 'Best score: ' + best + '%')+'</span>'));
+    }
+    card.appendChild(meta);
+
+    if(locked){
+      card.style.opacity = '0.55';
+      card.style.cursor = 'default';
+    } else {
+      card.addEventListener('click', function(){
+        if(k === 'writing') openWritingSelect();
+        else startQuiz(k);
+      });
+    }
+    grid.appendChild(card);
+  });
+  wrap.appendChild(grid);
+
+  wrap.appendChild(el('<h2 style="font-size:18px;margin:30px 0 14px;">Practice calendar</h2>'));
+  wrap.appendChild(buildCalendarCard());
+
+  return wrap;
+}
+
+function screenWritingSelect(){
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar('Soham', true));
+  var back = el('<button class="back-link">&larr; Back to home</button>');
+  back.addEventListener('click', function(){ state.screen='child-home'; render(); });
+  wrap.appendChild(back);
+  wrap.appendChild(el('<h2 style="font-size:22px;">Choose a writing prompt</h2>'));
+  wrap.appendChild(el('<p class="muted" style="margin-top:6px;">Pick one of these three topics to write about today.</p>'));
+  var grid = el('<div class="category-grid" style="margin-top:20px;"></div>');
+  state.writingChoices.forEach(function(p){
+    var card = el('<button class="cat-card" style="cursor:pointer;"></button>');
+    card.appendChild(el('<span class="tag" style="background:var(--brand-tint);color:var(--brand-dark);align-self:flex-start;">'+p.type+'</span>'));
+    card.appendChild(el('<p style="font-size:14.5px;font-weight:500;margin-top:8px;">'+p.prompt+'</p>'));
+    card.addEventListener('click', function(){ startWriting(p); });
+    grid.appendChild(card);
+  });
+  wrap.appendChild(grid);
+  return wrap;
+}
+
+function screenWriting(){
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar('Soham', true));
+  var back = el('<button class="back-link">&larr; Choose a different prompt</button>');
+  back.addEventListener('click', function(){
+    if(activePaperTimer){ clearInterval(activePaperTimer); activePaperTimer = null; }
+    state.screen='writing-select'; render();
+  });
+  wrap.appendChild(back);
+
+  var card = el('<div class="card"></div>');
+  card.appendChild(el('<span class="tag" style="background:var(--brand-tint);color:var(--brand-dark);">'+state.activeWritingPrompt.type+'</span>'));
+  card.appendChild(el('<h2 style="font-size:19px;margin-top:10px;">'+state.activeWritingPrompt.prompt+'</h2>'));
+
+  if(state.writingPhase === 'inprogress'){
+    card.appendChild(el('<p class="muted" style="margin-top:10px;">Grab a pencil and paper. Write your answer by hand, just like the real NAPLAN Year 3 writing test. Come back here when you\'re finished.</p>'));
+
+    var timerBox = el('<div style="text-align:center;margin:22px 0;"></div>');
+    timerBox.appendChild(el('<div class="caption">Time writing</div>'));
+    var timerDisplay = el('<div id="paper-timer" style="font-size:40px;font-weight:800;font-family:\'IBM Plex Mono\',monospace;color:var(--brand-dark);margin-top:4px;">0:00</div>');
+    timerBox.appendChild(timerDisplay);
+    card.appendChild(timerBox);
+
+    var doneBtn = el('<button class="btn btn-primary btn-block">I\'ve finished writing</button>');
+    doneBtn.addEventListener('click', function(){
+      if(activePaperTimer){ clearInterval(activePaperTimer); activePaperTimer = null; }
+      finishPaperWriting();
+    });
+    card.appendChild(doneBtn);
+
+    wrap.appendChild(card);
+
+    if(activePaperTimer){ clearInterval(activePaperTimer); }
+    activePaperTimer = setInterval(function(){
+      var node = document.getElementById('paper-timer');
+      if(!node){ clearInterval(activePaperTimer); activePaperTimer = null; return; }
+      node.textContent = fmtClock((Date.now() - state.writingStartAt) / 1000);
+    }, 1000);
+
+  } else {
+    card.appendChild(el('<p class="muted" style="margin-top:10px;">Time writing: <strong>'+fmtMinutes(state.writingDurationSeconds)+'</strong></p>'));
+    card.appendChild(el('<hr class="soft">'));
+    card.appendChild(el('<p style="font-weight:600;font-size:14px;">Self-check before marking complete</p>'));
+    WRITING_CHECKLIST.forEach(function(item){
+      var row = el('<label class="checklist-item" style="cursor:pointer;"></label>');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.addEventListener('change', function(){ state.writingChecklist[item] = cb.checked; });
+      row.appendChild(cb);
+      row.appendChild(el('<span>'+item+'</span>'));
+      card.appendChild(row);
+    });
+
+    var saveBtn = el('<button class="btn btn-primary" style="margin-top:16px;">Mark as complete</button>');
+    saveBtn.addEventListener('click', saveWriting);
+    card.appendChild(saveBtn);
+    card.appendChild(el('<p class="muted" style="font-size:12.5px;margin-top:10px;">Keep your paper somewhere safe — your parent will want to look over it.</p>'));
+
+    wrap.appendChild(card);
+  }
+
+  return wrap;
+}
+
+function screenQuiz(){
+  var quiz = state.activeQuiz;
+  var q = quiz.questions[state.quizIndex];
+  var cat = CATEGORIES[quiz.catKey];
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar('Soham', true));
+
+  var back = el('<button class="back-link">&larr; Exit quiz</button>');
+  back.addEventListener('click', function(){
+    if(confirm('Leave this quiz? Your progress on it will not be saved.')) exitQuiz();
+  });
+  wrap.appendChild(back);
+
+  var header = el('<div class="quiz-header"><span class="caption">'+cat.label+'</span><span class="muted" style="font-size:13px;">Question '+(state.quizIndex+1)+' of '+quiz.total+'</span></div>');
+  wrap.appendChild(header);
+
+  var track = el('<div class="progress-track"></div>');
+  var fill = el('<div class="progress-fill"></div>');
+  fill.style.width = Math.round(((state.quizIndex) / quiz.total) * 100) + '%';
+  track.appendChild(fill);
+  wrap.appendChild(track);
+
+  var card = el('<div class="card"></div>');
+  if(q.passage){ card.appendChild(el('<div class="passage-box">'+q.passage+'</div>')); }
+  card.appendChild(el('<h3 style="font-size:18px;margin-bottom:16px;">'+q.prompt+'</h3>'));
+
+  q.options.forEach(function(opt, idx){
+    var btn = el('<button class="option-btn">'+opt+'</button>');
+    if(idx === state.selectedOption){
+      btn.classList.add('selected');
+    }
+    btn.addEventListener('click', function(){ selectOption(idx); });
+    card.appendChild(btn);
+  });
+
+  if(state.selectedOption === null){
+    card.appendChild(el('<p class="error-text" id="quiz-err" style="display:none;">Choose an answer to continue.</p>'));
+  }
+  wrap.appendChild(card);
+
+  var isLast = state.quizIndex === quiz.total - 1;
+  var actionRow = el('<div style="margin-top:18px;display:flex;justify-content:flex-end;"></div>');
+  var nextBtn = el('<button class="btn btn-primary">'+(isLast ? 'Submit quiz' : 'Next question')+'</button>');
+  nextBtn.addEventListener('click', function(){
+    if(state.selectedOption === null){
+      var errNode = document.getElementById('quiz-err');
+      if(errNode) errNode.style.display = 'block';
+      return;
+    }
+    advanceQuiz();
+  });
+  actionRow.appendChild(nextBtn);
+  wrap.appendChild(actionRow);
+
+  return wrap;
+}
+
+function screenQuizResult(){
+  var r = state.lastResult;
+  var cat = CATEGORIES[r.category];
+  var pct = Math.round((r.score / r.total) * 100);
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar('Soham', true));
+
+  var hero = el('<div class="result-hero"></div>');
+  hero.appendChild(el('<div class="caption">'+cat.label+' complete</div>'));
+  var ring = el('<div class="score-ring"><div class="num">'+r.score+'/'+r.total+'</div><div class="denom">'+pct+'% correct</div></div>');
+  hero.appendChild(ring);
+  var msg = pct >= 80 ? "Excellent work, Soham!" : pct >= 60 ? "Nice work! A little more practice and you'll master this." : "Good try. Let's review the answers below and go again soon.";
+  hero.appendChild(el('<p style="max-width:420px;margin:0 auto;">'+msg+' Total time: '+fmtDuration(r.totalTimeSeconds)+'.</p>'));
+  wrap.appendChild(hero);
+
+  var card = el('<div class="card"></div>');
+  card.appendChild(el('<h3 style="font-size:16px;margin-bottom:6px;">Review your answers</h3>'));
+  r.details.forEach(function(d, i){
+    var item = el('<div class="review-item"></div>');
+    item.appendChild(el('<p style="font-weight:500;">'+(i+1)+'. '+d.prompt+'</p>'));
+    var tagRow = el('<div style="margin:4px 0;display:flex;gap:6px;flex-wrap:wrap;align-items:center;"></div>');
+    tagRow.appendChild(el(d.isCorrect ? '<span class="tag tag-correct">Correct</span>' : '<span class="tag tag-incorrect">Try again</span>'));
+    tagRow.appendChild(el('<span class="tag '+(d.timeSeconds>SLOW_SECONDS?'tag-time-slow':'tag-time')+'">'+fmtDuration(d.timeSeconds)+'</span>'));
+    item.appendChild(tagRow);
+    var yourAns = d.chosenIndex !== null ? d.options[d.chosenIndex] : '(no answer)';
+    var correctAns = d.options[d.correctIndex];
+    item.appendChild(el('<p style="font-size:13px;color:var(--ink-soft);">Your answer: '+yourAns+(d.isCorrect ? '' : ' &nbsp;·&nbsp; Correct answer: '+correctAns)+'</p>'));
+    card.appendChild(item);
+  });
+  wrap.appendChild(card);
+
+  var btnRow = el('<div style="display:flex;gap:12px;margin-top:18px;justify-content:center;flex-wrap:wrap;"></div>');
+  var again = el('<button class="btn btn-primary">Back to home</button>');
+  again.addEventListener('click', function(){ state.screen = 'child-home'; render(); });
+  btnRow.appendChild(again);
+  var retry = el('<button class="btn btn-ghost">Retry '+cat.label+'</button>');
+  retry.addEventListener('click', function(){ startQuiz(r.category); });
+  btnRow.appendChild(retry);
+  wrap.appendChild(btnRow);
+
+  return wrap;
+}
+
+/* ---- ADMIN ---- */
+
+function screenAdminDashboard(){
+  var wrap = document.createElement('div');
+  wrap.appendChild(navbar('Admin', true));
+
+  var tabs = el('<div class="tabs"></div>');
+  [['overview','Overview'],['calendar','Calendar'],['history','Quiz history'],['writing','Writing samples'],['settings','Settings']].forEach(function(t){
+    var b = el('<button class="tab-btn'+(state.adminTab===t[0]?' active':'')+'">'+t[1]+'</button>');
+    b.addEventListener('click', function(){ state.adminTab = t[0]; state.openHistoryId=null; render(); });
+    tabs.appendChild(b);
+  });
+  wrap.appendChild(tabs);
+
+  if(state.adminTab === 'overview') wrap.appendChild(adminOverview());
+  else if(state.adminTab === 'calendar') wrap.appendChild(buildCalendarCard());
+  else if(state.adminTab === 'history') wrap.appendChild(adminHistory());
+  else if(state.adminTab === 'writing') wrap.appendChild(adminWriting());
+  else wrap.appendChild(adminSettings());
+
+  return wrap;
+}
+
+function trendArrowHtml(trend){
+  if(trend === 'up') return ' <span style="color:var(--success);">&#8593;</span>';
+  if(trend === 'down') return ' <span style="color:var(--danger);">&#8595;</span>';
+  return ' <span style="color:var(--ink-faint);">&#8594;</span>';
+}
+
+function areaProgressCard(k){
+  var cat = CATEGORIES[k];
+  var results = state.quizResults.filter(function(r){ return r.category === k; });
+  var attempts = results.length;
+  var avg = categoryAvgPct(k);
+  var avgTime = categoryAvgTime(k);
+  var card = el('<div class="card" style="margin-bottom:12px;"></div>');
+  var head = el('<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;"></div>');
+  head.appendChild(el('<h3 style="font-size:15px;">'+cat.label+'</h3>'));
+  head.appendChild(el('<span class="muted" style="font-size:12px;">'+attempts+' attempt'+(attempts===1?'':'s')+'</span>'));
+  card.appendChild(head);
+  var statsRow = el('<div style="display:flex;gap:24px;margin-top:12px;flex-wrap:wrap;"></div>');
+  statsRow.appendChild(el('<div><div class="caption">Avg score</div><div style="font-weight:800;font-size:18px;">'+(avg===null?'—':avg+'%')+'</div></div>'));
+  statsRow.appendChild(el('<div><div class="caption">Avg time / question</div><div style="font-weight:800;font-size:18px;">'+fmtDuration(avgTime)+'</div></div>'));
+  if(k === 'numeracy'){
+    var tier = state.numeracyProgress.tier;
+    var trend = numeracyAccuracyTrend();
+    statsRow.appendChild(el('<div><div class="caption">Difficulty tier</div><div style="font-weight:800;font-size:18px;">'+TIER_LABELS[tier]+' (Tier '+tier+')</div></div>'));
+    var trendBlock = el('<div><div class="caption">Recent accuracy</div><div style="font-weight:800;font-size:18px;">'+(trend?trend.recentPct+'%':'—')+'</div></div>');
+    if(trend){ trendBlock.querySelector('div:last-child').innerHTML += trendArrowHtml(trend.trend); }
+    statsRow.appendChild(trendBlock);
+  }
+  card.appendChild(statsRow);
+  return card;
+}
+
+function adminOverview(){
+  var wrap = document.createElement('div');
+  var totalQuizzes = state.quizResults.length;
+  var avgAll = totalQuizzes ? Math.round(state.quizResults.reduce(function(s,r){return s + r.score/r.total;},0)/totalQuizzes*100) : null;
+  var allTimes = [];
+  state.quizResults.forEach(function(r){ r.details.forEach(function(d){ if(d.timeSeconds!=null) allTimes.push(d.timeSeconds); }); });
+  var avgTimeAll = allTimes.length ? allTimes.reduce(function(a,b){return a+b;},0)/allTimes.length : null;
+  var stampCount = ['reading','language','numeracy','timestables'].filter(function(k){ var b=categoryBestPct(k); return b!==null && b>=60; }).length + (state.writingSamples.length>0?1:0);
+
+  var stats = el('<div class="stat-grid"></div>');
+  stats.appendChild(el('<div class="stat-card"><div class="stat-label">Quizzes completed</div><div class="stat-value">'+totalQuizzes+'</div></div>'));
+  stats.appendChild(el('<div class="stat-card"><div class="stat-label">Average score</div><div class="stat-value">'+(avgAll===null?'—':avgAll+'%')+'</div></div>'));
+  stats.appendChild(el('<div class="stat-card"><div class="stat-label">Avg time / question</div><div class="stat-value">'+fmtDuration(avgTimeAll)+'</div></div>'));
+  stats.appendChild(el('<div class="stat-card"><div class="stat-label">Areas mastered</div><div class="stat-value">'+stampCount+' / 5</div></div>'));
+  wrap.appendChild(stats);
+
+  wrap.appendChild(el('<h3 style="font-size:15px;margin:20px 0 12px;">Progress by area</h3>'));
+  ['reading','language','numeracy','timestables'].forEach(function(k){
+    wrap.appendChild(areaProgressCard(k));
+  });
+
+  if(totalQuizzes === 0 && state.writingSamples.length === 0){
+    wrap.appendChild(el('<div class="empty-state"><p>Soham has not completed any activities yet.</p></div>'));
+  }
+
+  return wrap;
+}
+
+function renderHistoryRow(r){
+  var pct = Math.round((r.score/r.total)*100);
+  var row = el('<div class="history-row"></div>');
+  var top = el('<div class="history-row-top"></div>');
+  var tierNote = r.difficultyTier ? ' · '+TIER_LABELS[r.difficultyTier]+' (Tier '+r.difficultyTier+')' : '';
+  var left = el('<div><p style="font-weight:600;">'+CATEGORIES[r.category].label+tierNote+'</p><p class="muted" style="font-size:12px;">'+fmtDate(r.date)+'</p></div>');
+  top.appendChild(left);
+  top.appendChild(el('<div style="font-weight:800;font-size:17px;color:'+(pct>=60?'var(--brand-dark)':'var(--danger)')+';">'+r.score+'/'+r.total+'</div>'));
+  row.appendChild(top);
+  var meta = el('<div class="history-meta"></div>');
+  meta.appendChild(el('<span class="tag tag-time">Total '+fmtDuration(r.totalTimeSeconds)+'</span>'));
+  meta.appendChild(el('<span class="tag '+(r.avgTimeSeconds>SLOW_SECONDS?'tag-time-slow':'tag-time')+'">Avg '+fmtDuration(r.avgTimeSeconds)+'/question</span>'));
+  row.appendChild(meta);
+  var detail = el('<div class="history-detail"></div>');
+  var passagesShown = {};
+  r.details.forEach(function(d,i){
+    var item = el('<div style="padding:8px 0;border-top:1px solid var(--border);font-size:13px;"></div>');
+    if(i===0) item.style.borderTop = 'none';
+    if(d.passage && !passagesShown[d.passage]){
+      item.appendChild(el('<div class="passage-box" style="margin-bottom:8px;">'+d.passage+'</div>'));
+      passagesShown[d.passage] = true;
+    }
+    var tag = d.isCorrect ? '<span class="tag tag-correct">Correct</span>' : '<span class="tag tag-incorrect">Incorrect</span>';
+    var timeTag = '<span class="tag '+(d.timeSeconds>SLOW_SECONDS?'tag-time-slow':'tag-time')+'">'+fmtDuration(d.timeSeconds)+'</span>';
+    var topicTag = d.topic ? '<span class="tag tag-time">'+(NUMERACY_TOPICS[d.topic]?NUMERACY_TOPICS[d.topic].label:d.topic)+'</span>' : '';
+    var qBlock = el('<div></div>');
+    qBlock.appendChild(el('<p style="font-weight:500;margin-bottom:3px;">'+(i+1)+'. '+d.prompt+'</p>'));
+    var tagRow = el('<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;"></div>');
+    tagRow.innerHTML = tag+timeTag+topicTag+
+      '<span class="muted">Answered: '+(d.chosenIndex!==null?d.options[d.chosenIndex]:'—')+(d.isCorrect?'':' (correct: '+d.options[d.correctIndex]+')')+'</span>';
+    qBlock.appendChild(tagRow);
+    item.appendChild(qBlock);
+    detail.appendChild(item);
+  });
+  row.appendChild(detail);
+  row.addEventListener('click', function(){
+    state.openHistoryId = state.openHistoryId === r.id ? null : r.id;
+    render();
+  });
+  if(state.openHistoryId === r.id) detail.classList.add('open');
+  return row;
+}
+
+function adminHistory(){
+  var wrap = document.createElement('div');
+  if(state.quizResults.length === 0){
+    wrap.appendChild(el('<div class="empty-state"><p>No quiz attempts yet.</p></div>'));
+    return wrap;
+  }
+  ['reading','language','numeracy','timestables'].forEach(function(k){
+    var results = state.quizResults.filter(function(r){ return r.category === k; }).slice().reverse();
+    if(results.length === 0) return;
+    wrap.appendChild(el('<h3 style="font-size:14px;margin:22px 0 10px;color:var(--ink-soft);">'+CATEGORIES[k].label+'</h3>'));
+    results.forEach(function(r){ wrap.appendChild(renderHistoryRow(r)); });
+  });
+  return wrap;
+}
+
+function adminWriting(){
+  var wrap = document.createElement('div');
+  if(state.writingSamples.length === 0){
+    wrap.appendChild(el('<div class="empty-state"><p>No writing pieces saved yet.</p></div>'));
+    return wrap;
+  }
+  var sorted = state.writingSamples.slice().reverse();
+  sorted.forEach(function(s){
+    var card = el('<div class="writing-card"></div>');
+    card.appendChild(el('<span class="tag" style="background:var(--brand-tint);color:var(--brand-dark);">'+s.promptType+'</span>'));
+    if(s.mode === 'paper'){ card.appendChild(el('<span class="tag" style="background:var(--surface-alt);color:var(--ink-soft);margin-left:6px;">&#9998; Paper</span>')); }
+    card.appendChild(el('<p style="font-weight:600;margin-top:8px;">'+s.prompt+'</p>'));
+    var metaRow = el('<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;"></div>');
+    var metaText = fmtDate(s.date) + (s.wordCount!=null ? ' · '+s.wordCount+' words' : '') + ' · self-check '+s.checklistScore;
+    metaRow.appendChild(el('<span class="muted" style="font-size:12px;">'+metaText+'</span>'));
+    metaRow.appendChild(el('<span class="tag tag-time">Time taken: '+fmtMinutes(s.durationSeconds)+'</span>'));
+    card.appendChild(metaRow);
+
+    if(s.mode === 'paper' || !s.text){
+      card.appendChild(el('<p style="margin-top:10px;font-size:14px;color:var(--ink-soft);background:var(--surface-alt);border-radius:var(--radius-sm);padding:10px 12px;">&#9998; Written on paper — there\'s no digital copy. Ask Soham to show you his page to review handwriting, spelling and structure directly.</p>'));
+    } else {
+      card.appendChild(el('<p style="margin-top:10px;white-space:pre-wrap;font-size:14.5px;">'+s.text.replace(/</g,'&lt;')+'</p>'));
+    }
+
+    var cl = el('<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;"></div>');
+    s.checklist.forEach(function(c){
+      cl.appendChild(el('<p style="font-size:13px;color:var(--ink-soft);margin:3px 0;">'+(c.checked?'&#10003;':'&#9675;')+' '+c.item+'</p>'));
+    });
+    card.appendChild(cl);
+
+    var noteSection = el('<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;"></div>');
+    noteSection.appendChild(el('<label style="margin-bottom:4px;">Your notes (after reviewing his page)</label>'));
+    var noteTa = document.createElement('textarea');
+    noteTa.rows = 2;
+    noteTa.style.fontSize = '13.5px';
+    noteTa.placeholder = 'e.g. Strong opening, but mixed up there/their twice…';
+    noteTa.value = s.adminNote || '';
+    noteSection.appendChild(noteTa);
+    var noteSaveBtn = el('<button class="btn btn-ghost btn-small" style="margin-top:8px;">Save note</button>');
+    noteSaveBtn.addEventListener('click', function(){ saveWritingNote(s.id, noteTa.value); });
+    noteSection.appendChild(noteSaveBtn);
+    card.appendChild(noteSection);
+
+    wrap.appendChild(card);
+  });
+  return wrap;
+}
+
+function adminSettings(){
+  var wrap = document.createElement('div');
+  var card = el('<div class="card" style="max-width:420px;"></div>');
+  card.appendChild(el('<h3 style="font-size:15px;margin-bottom:14px;">Change passwords</h3>'));
+
+  ['soham','admin'].forEach(function(role){
+    var field = el('<div class="field"></div>');
+    field.appendChild(el('<label>New '+(role==='soham'?"Soham's":"admin")+' password</label>'));
+    var input = document.createElement('input');
+    input.type = 'password';
+    input.placeholder = 'At least 3 characters';
+    field.appendChild(input);
+    var btn = el('<button class="btn btn-ghost btn-small" style="margin-top:8px;">Update</button>');
+    btn.addEventListener('click', function(){
+      if(!input.value || input.value.length < 3){
+        showToast('Password must be at least 3 characters.');
+        return;
+      }
+      var cfg = state.authConfig || {};
+      if(role === 'soham') cfg.sohamPassword = input.value;
+      else cfg.adminPassword = input.value;
+      storageSet('auth-config', cfg).then(function(){
+        state.authConfig = cfg;
+        showToast('Password updated.');
+        input.value = '';
+      });
+    });
+    field.appendChild(btn);
+    card.appendChild(field);
+    card.appendChild(el('<hr class="soft">'));
+  });
+
+  wrap.appendChild(card);
+
+  var dangerCard = el('<div class="card" style="max-width:420px;margin-top:16px;border-color:var(--danger);"></div>');
+  dangerCard.appendChild(el('<h3 style="font-size:15px;margin-bottom:6px;">Reset progress</h3>'));
+  dangerCard.appendChild(el('<p class="muted" style="font-size:13px;margin-bottom:12px;">Clears every saved quiz attempt and score. Writing samples are kept.</p>'));
+  var resetBtn = el('<button class="btn" style="border-color:var(--danger);color:var(--danger);">Reset all quiz history</button>');
+  resetBtn.addEventListener('click', function(){
+    if(!confirm('This will permanently delete all of Soham\'s quiz results. Continue?')) return;
+    state.quizResults = [];
+    storageSet('quiz-results', []).then(function(){
+      showToast('Quiz history has been reset.');
+      render();
+    });
+  });
+  dangerCard.appendChild(resetBtn);
+  wrap.appendChild(dangerCard);
+  return wrap;
+}
+
+/* ---------------------------------------------------------
+   MAIN RENDER
+--------------------------------------------------------- */
+
+function render(){
+  try{
+    if(activePaperTimer && state.screen !== 'writing'){
+      clearInterval(activePaperTimer);
+      activePaperTimer = null;
+    }
+    var root = document.getElementById('app');
+    root.innerHTML = '';
+    var node;
+    switch(state.screen){
+      case 'loading': node = screenLoading(); break;
+      case 'role-select': node = screenRoleSelect(); break;
+      case 'soham-setup': node = screenAuth('setup','soham'); break;
+      case 'soham-login': node = screenAuth('login','soham'); break;
+      case 'admin-setup': node = screenAuth('setup','admin'); break;
+      case 'admin-login': node = screenAuth('login','admin'); break;
+      case 'child-home': node = screenChildHome(); break;
+      case 'writing-select': node = screenWritingSelect(); break;
+      case 'writing': node = screenWriting(); break;
+      case 'quiz': node = screenQuiz(); break;
+      case 'quiz-result': node = screenQuizResult(); break;
+      case 'admin-dashboard': node = screenAdminDashboard(); break;
+      default: node = screenRoleSelect();
+    }
+    root.appendChild(node);
+  } catch(e){
+    showFatalError(e && e.message ? e.message : String(e));
+  }
+}
+
+init();
+
+})();
+</script>
+</body>
+</html>
